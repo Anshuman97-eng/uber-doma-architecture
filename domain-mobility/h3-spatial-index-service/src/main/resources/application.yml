@@ -1,0 +1,14 @@
+server:
+  port: 9107
+
+grpc:
+  server:
+    port: 9007
+
+spring:
+  application:
+    name: h3-spatial-index-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/h3_spatial_index_service_db
+    username: uber
+    password: uber_password
