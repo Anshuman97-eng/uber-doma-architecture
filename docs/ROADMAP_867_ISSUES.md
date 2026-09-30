@@ -17,17 +17,17 @@
 
 ---
 
-## 🛠️ Automated Issue Ingestion Tool
+## 🛠️ GitHub Issues Tracker
 
-An automated Python script is provided at [`scripts/create_github_issues.py`](file:///Users/sajid/Documents/Uber-doma/scripts/create_github_issues.py) to publish all 867 issues directly to your GitHub repository using the GitHub CLI (`gh issue create`) or the GitHub REST API.
+All **867+ issues** have been successfully ingested and are live on GitHub! You can view, filter by label, and pick issues directly from the issue tracker:
 
-```bash
-# Preview issues locally without calling GitHub:
-python3 scripts/create_github_issues.py --dry-run
+👉 **[Browse All 867+ Issues on GitHub](https://github.com/YeamimHossainSajid/uber-doma-architecture/issues)**
 
-# Batch create all 867 issues with automatic rate-limit pacing:
-python3 scripts/create_github_issues.py --repo YeamimHossainSajid/uber-doma-architecture
-```
+Issues are categorized by labels:
+- `level:beginner` & `good-first-issue`
+- `level:moderate`
+- `level:advanced`
+- Domain labels: `domain:mobility`, `domain:trip`, `domain:billing`, `domain:driver`, `domain:rider`, `domain:platform`
 
 ---
 
