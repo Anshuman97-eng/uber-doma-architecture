@@ -1,0 +1,14 @@
+server:
+  port: 9126
+
+grpc:
+  server:
+    port: 9026
+
+spring:
+  application:
+    name: fleet-partner-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fleet_partner_service_db
+    username: uber
+    password: uber_password

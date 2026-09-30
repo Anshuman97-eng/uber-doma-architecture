@@ -1,0 +1,14 @@
+server:
+  port: 8084
+
+grpc:
+  server:
+    port: 9084
+
+spring:
+  application:
+    name: driver-domain-gateway
+  datasource:
+    url: jdbc:postgresql://localhost:5432/driver_domain_gateway_db
+    username: uber
+    password: uber_password

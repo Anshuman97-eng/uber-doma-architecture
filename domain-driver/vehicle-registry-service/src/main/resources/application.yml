@@ -1,0 +1,14 @@
+server:
+  port: 9124
+
+grpc:
+  server:
+    port: 9024
+
+spring:
+  application:
+    name: vehicle-registry-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vehicle_registry_service_db
+    username: uber
+    password: uber_password

@@ -1,0 +1,14 @@
+server:
+  port: 9127
+
+grpc:
+  server:
+    port: 9027
+
+spring:
+  application:
+    name: driver-quest-incentives-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/driver_quest_incentives_service_db
+    username: uber
+    password: uber_password
