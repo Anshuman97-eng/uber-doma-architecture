@@ -12,12 +12,14 @@
 
 ---
 
-## 🗺️ Tiered Traffic Routing Architecture
+## 🗺️ Tiered Traffic Routing & Interservice Communication
 
-The core request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices** (featuring explicit **Same-Domain Interservice Communication**):
+The core request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices**, illustrating:
+1. **Intra-Domain gRPC IPC (Green Vectors):** Microservices inside the same bounded domain invoke each other directly via low-latency internal gRPC stubs.
+2. **Blocked Cross-Domain Calls (Red Vector):** Services can **never** directly invoke microservices residing in a different domain—all cross-domain collaboration is forced through Tier 2 Sub-Gateways.
 
 <p align="center">
-  <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA Tiered Traffic Routing Architecture" width="100%">
+  <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA Tiered Traffic Routing Architecture with Intra-Domain gRPC and Blocked Cross-Domain Calls" width="100%">
 </p>
 
 ---
