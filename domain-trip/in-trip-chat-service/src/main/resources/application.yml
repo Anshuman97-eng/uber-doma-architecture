@@ -1,0 +1,14 @@
+server:
+  port: 9113
+
+grpc:
+  server:
+    port: 9013
+
+spring:
+  application:
+    name: in-trip-chat-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/in_trip_chat_service_db
+    username: uber
+    password: uber_password

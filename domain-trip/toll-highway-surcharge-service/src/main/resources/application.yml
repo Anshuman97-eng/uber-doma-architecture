@@ -1,0 +1,14 @@
+server:
+  port: 9115
+
+grpc:
+  server:
+    port: 9015
+
+spring:
+  application:
+    name: toll-highway-surcharge-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/toll_highway_surcharge_service_db
+    username: uber
+    password: uber_password

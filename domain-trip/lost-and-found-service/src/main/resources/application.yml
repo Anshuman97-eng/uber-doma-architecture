@@ -1,0 +1,14 @@
+server:
+  port: 9114
+
+grpc:
+  server:
+    port: 9014
+
+spring:
+  application:
+    name: lost-and-found-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lost_and_found_service_db
+    username: uber
+    password: uber_password
