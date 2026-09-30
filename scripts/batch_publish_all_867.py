@@ -233,13 +233,14 @@ def main():
     # 1. 40 Services x 21 tasks = 840 issues
     for domain, svc, desc, dom_label in SERVICES:
         for labels, tmpl_title, tmpl_summary, tmpl_context, tmpl_steps, tmpl_cmd in TASK_TEMPLATES:
-            title = tmpl_title.format(svc=svc)
             path = f"{domain}/{svc}"
             cls_name = "".join(x.capitalize() for x in svc.replace("-service", "").split("-"))
+            fmt_kwargs = {"path": path, "svc": svc, "clazz": cls_name, "desc": desc}
+            title = tmpl_title.format(**fmt_kwargs)
             full_labels = f"{labels},{dom_label}"
 
             body = f"""### 🎯 Objective
-{tmpl_summary.format(path=path)}
+{tmpl_summary.format(**fmt_kwargs)}
 
 ---
 
@@ -249,18 +250,18 @@ def main():
 ---
 
 ### 💡 Architectural Context
-{tmpl_context.format(path=path)}
+{tmpl_context.format(**fmt_kwargs)}
 
 ---
 
 ### 🛠️ Step-by-Step Implementation Guide
-{tmpl_steps.format(path=path, clazz=cls_name)}
+{tmpl_steps.format(**fmt_kwargs)}
 
 ---
 
 ### 🧪 Verification Command
 ```bash
-{tmpl_cmd.format(path=path)}
+{tmpl_cmd.format(**fmt_kwargs)}
 ```
 
 ---
