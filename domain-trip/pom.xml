@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.uber.doma</groupId>
+        <artifactId>uber-doma-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>domain-trip</artifactId>
+    <packaging>pom</packaging>
+    <name>Domain 2: Trip Fulfillment and Lifecycle</name>
+
+    <modules>
+        <module>trip-domain-gateway</module>
+        <module>trip-state-machine-service</module>
+        <module>trip-reservation-service</module>
+        <module>trip-cancellation-service</module>
+        <module>safety-telematics-service</module>
+        <module>in-trip-chat-service</module>
+        <module>lost-and-found-service</module>
+        <module>toll-highway-surcharge-service</module>
+    </modules>
+</project>
