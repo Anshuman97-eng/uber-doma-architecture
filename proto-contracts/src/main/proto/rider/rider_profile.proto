@@ -1,0 +1,19 @@
+syntax = "proto3";
+package uber.rider;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.rider";
+
+service RiderProfileService {
+  rpc GetProfile (RiderProfileRequest) returns (RiderProfileResponse);
+}
+
+message RiderProfileRequest {
+  string rider_id = 1;
+}
+
+message RiderProfileResponse {
+  string rider_id = 1;
+  string full_name = 2;
+  double rating = 3;
+  bool has_uber_one = 4;
+}
