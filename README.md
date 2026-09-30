@@ -14,7 +14,7 @@
 
 ## 🗺️ Tiered Traffic Routing Architecture
 
-The core canonical request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices**:
+The core request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices** (featuring explicit **Same-Domain Interservice Communication**):
 
 <p align="center">
   <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA Tiered Traffic Routing Architecture" width="100%">
@@ -22,23 +22,31 @@ The core canonical request routing model across the **Edge Gateway (Tier 1)**, *
 
 ---
 
-## 🔀 Inter-Gateway & Inter-Service Communication
+## 🔀 Inter-Gateway & Same-Domain Interservice Communication
 
-A major challenge in microservice architectures is knowing **how services are allowed to talk to each other**. DOMA eliminates spaghetti dependencies through strict communication laws:
+A major challenge in distributed architectures is understanding **how services communicate inside vs. across domain boundaries**. DOMA provides strict architectural rules:
 
 <p align="center">
-  <img src="docs/images/inter-gateway-and-service-communication.svg" alt="Inter-Gateway & Inter-Service Communication Rules" width="100%">
+  <img src="docs/images/inter-gateway-and-service-communication.svg" alt="Inter-Gateway & Same-Domain Interservice Communication Rules" width="100%">
 </p>
 
-### 1. Inter-Sub Gateway Communication (Tier-2 to Tier-2)
-* **Allowed:** When a service in the `Trip Domain` requires billing data, it **never** calls `Payment Core` directly.
-* Instead, the `Trip Domain Gateway` invokes the `Billing Domain Gateway` over strongly-typed, backward-compatible **gRPC / Protocol Buffer** contracts.
-* **Benefit:** Each domain can refactor its internal leaf microservices without breaking peer domains.
+### 1. Same-Domain Interservice Communication (Inside the Bounded Context)
+Microservices residing inside the **same domain** collaborate through two well-defined patterns:
+* **Synchronous Low-Latency gRPC IPC (Green Vectors):**
+  - Services within the same domain share domain-internal Protobuf contracts.
+  - *Example:* When `Driver Match (DISCO)` identifies a candidate, it directly calls `Route Planner (Gurafu)` via internal gRPC (`computeRoute()`) to calculate the detour distance. This is 100% legal because both belong to the **Mobility Domain**.
+* **Asynchronous Domain Event Streaming (Kafka Broker):**
+  - When state changes, services emit domain events via the **Transactional Outbox Pattern** to local Kafka topics.
+  - *Example:* `Supply Locator` publishes `DriverAvailableEvent`, which is asynchronously consumed by the `DISCO Matcher` without tight coupling.
 
-### 2. Internal Microservice Communication (Within a Domain)
-* **Synchronous Scatter-Gather:** The Domain Gateway acts as a non-blocking orchestrator, querying leaf services in parallel using Project Reactor (`Mono.zip`).
-* **Asynchronous Domain Events:** Inter-service data synchronization within the domain is published asynchronously using the **Transactional Outbox Pattern** and Kafka.
-* **Prohibited:** Direct cross-domain synchronous calls between leaf services (e.g. `Driver Match` $\to$ `Payment Core`) are blocked at both compile-time (ArchUnit tests) and runtime (Network Security Policies).
+### 2. Inter-Sub Gateway Communication (Tier-2 to Tier-2 Cross-Domain)
+* **Allowed:** When a service in the `Trip Domain` requires billing data, it **never** calls `Payment Core` directly.
+* Instead, the `Trip Domain Gateway` invokes the `Billing Domain Gateway` over versioned, backward-compatible **gRPC / Protocol Buffer** contracts.
+* **Benefit:** Each domain team refactors and deploys its internal leaf microservices independently without breaking other domains.
+
+### 3. Prohibited: Cross-Domain Direct Leaf Calls (Red Vectors)
+* Direct cross-domain leaf calls (e.g. `Driver Match` $\to$ `Payment Core`) are **strictly forbidden**.
+* Enforced at compile-time via **ArchUnit architectural verification tests** and at runtime via **Kubernetes Network Policies / Istio AuthorizationPolicies**.
 
 ---
 
@@ -111,9 +119,6 @@ Dependencies flow strictly downward. A lower layer **never invokes an upper laye
 <p align="center">
   <img src="docs/images/agnostic-rule-layers.svg" alt="The 5-Layer Agnostic Dependency Rule" width="100%">
 </p>
-
-> [!IMPORTANT]
-> **The Agnostic Invariant:** Leaf microservices within a domain never cross domain boundaries directly. All cross-domain collaboration is brokered through Tier 2 Domain Gateways over versioned Protocol Buffers.
 
 ---
 
