@@ -1,155 +1,148 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" width="100%" height="100%">
   <defs>
     <style>
-      .hdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 20px; font-weight: 800; fill: #0f172a; }
-      .subhdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
-      .node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 700; fill: #ffffff; }
-      .node-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #94a3b8; }
-      .tag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; }
-      .flow-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #2563eb; }
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+
+      .hdr { font-family: 'Inter', -apple-system, sans-serif; font-size: 20px; font-weight: 700; fill: #ffffff; }
+      .subhdr { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #8b949e; }
+      .box-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+      .card-title { font-family: 'Inter', -apple-system, sans-serif; font-size: 14px; font-weight: 600; fill: #f0f6fc; }
+      .card-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-style: italic; fill: #8b949e; }
+      .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; }
+      .pulse-blue { fill: #38bdf8; filter: drop-shadow(0 0 6px #38bdf8); }
     </style>
-    <filter id="f-shadow" x="-5%" y="-5%" width="110%" height="115%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
-    </filter>
-    <marker id="m-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
-    </marker>
-    <marker id="m-arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+
+    <marker id="m-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
     </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="480" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+  <rect width="1100" height="480" fill="#0d1117" rx="14" />
+  <rect x="25" y="25" width="1050" height="430" rx="12" fill="#12161f" stroke="#1f2530" stroke-width="1.5" />
 
   <!-- Header -->
-  <g transform="translate(40, 40)">
-    <text class="hdr">THE TWO-TIER GATEWAY REQUEST LIFECYCLE</text>
-    <text y="22" class="subhdr">Decoupling Edge Perimeter Ingress (Tier 1) from Domain Orchestration &amp; Protocol Transcoding (Tier 2)</text>
+  <g transform="translate(55, 60)">
+    <text class="hdr">Two-Tier Gateway Protocol Transcoding Lifecycle</text>
+    <text y="24" class="subhdr">Public HTTPS/JSON Ingress Transcoded into Low-Latency Multiplexed gRPC</text>
   </g>
 
   <!-- Step 1: Client -->
-  <g transform="translate(40, 110)">
-    <rect width="170" height="260" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#f-shadow)" />
-    <rect width="170" height="34" rx="8" fill="#e2e8f0" />
-    <text x="85" y="22" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#1e293b" text-anchor="middle">CLIENT APPS</text>
-    <circle cx="85" cy="80" r="28" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="1.5"/>
-    <text x="85" y="87" font-size="24" text-anchor="middle">📱</text>
-    <text x="85" y="130" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Mobile / Web</text>
-    <text x="85" y="150" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Rider &amp; Driver Clients</text>
-    <line x1="20" y1="170" x2="150" y2="170" stroke="#e2e8f0" />
-    <text x="20" y="195" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">• Public Internet</text>
-    <text x="20" y="215" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">• HTTPS / JSON</text>
-    <text x="20" y="235" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">• OAuth2 Bearer Tokens</text>
+  <g transform="translate(55, 115)">
+    <rect width="180" height="250" rx="10" fill="#0d111a" stroke="#30363d" stroke-dasharray="3 3" />
+    <text x="90" y="32" class="box-tag" fill="#6e7681" text-anchor="middle">CLIENT APPS</text>
+    <circle cx="90" cy="85" r="28" fill="#161b26" stroke="#38bdf8" stroke-width="1.2" />
+    <text x="90" y="93" font-size="24" text-anchor="middle">📱</text>
+    <text x="90" y="140" class="card-title" text-anchor="middle">Mobile Client</text>
+    <text x="90" y="160" class="card-sub" text-anchor="middle">Rider &amp; Driver Apps</text>
+    <g transform="translate(20, 185)">
+      <rect width="140" height="24" rx="4" fill="#161b26" stroke="#21262d" />
+      <text x="70" y="16" class="badge" fill="#93c5fd" text-anchor="middle">HTTPS / JSON</text>
+    </g>
+    <g transform="translate(20, 215)">
+      <rect width="140" height="24" rx="4" fill="#161b26" stroke="#21262d" />
+      <text x="70" y="16" class="badge" fill="#94a3b8" text-anchor="middle">JWT Bearer Auth</text>
+    </g>
   </g>
 
-  <!-- Flow 1 -->
-  <line x1="210" y1="240" x2="280" y2="240" stroke="#2563eb" stroke-width="2.5" marker-end="url(#m-arrow)" />
-  <rect x="215" y="215" width="60" height="18" rx="4" fill="#eff6ff" />
-  <text x="245" y="228" class="flow-label" text-anchor="middle">HTTPS</text>
+  <!-- Flow 1: Client -> Edge -->
+  <path id="flow-c-e" d="M 235 240 L 305 240" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#m-arrow)" fill="none" />
+  <circle r="4.5" class="pulse-blue">
+    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 235 240 L 305 240" />
+  </circle>
 
   <!-- Step 2: Tier 1 Edge Gateway -->
-  <g transform="translate(290, 100)">
-    <rect width="250" height="280" rx="10" fill="#0f172a" filter="url(#f-shadow)" />
-    <rect width="250" height="34" rx="8" fill="#1e293b" />
-    <text x="125" y="22" font-family="-apple-system, sans-serif" font-size="12" font-weight="800" fill="#38bdf8" text-anchor="middle">TIER 1: EDGE GATEWAY</text>
+  <g transform="translate(315, 115)">
+    <rect width="230" height="250" rx="10" fill="#0d111a" stroke="#2563eb" stroke-dasharray="3 3" />
+    <text x="115" y="32" class="box-tag" fill="#60a5fa" text-anchor="middle">TIER 1: EDGE GATEWAY</text>
     <g transform="translate(20, 50)">
-      <text class="node-title" fill="#f8fafc">Perimeter Edge</text>
-      <text y="20" class="node-text">Global Spring Cloud Gateway</text>
-      <line x1="0" y1="35" x2="210" y2="35" stroke="#334155" />
-      <g transform="translate(0, 50)">
-        <rect width="210" height="28" rx="4" fill="#1e293b" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#e2e8f0">🛡️ TLS Termination &amp; WAF</text>
-      </g>
-      <g transform="translate(0, 85)">
-        <rect width="210" height="28" rx="4" fill="#1e293b" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#e2e8f0">🔑 JWT / AuthN Validation</text>
-      </g>
-      <g transform="translate(0, 120)">
-        <rect width="210" height="28" rx="4" fill="#1e293b" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#e2e8f0">🚦 Global Rate Limiter</text>
-      </g>
-      <g transform="translate(0, 155)">
-        <rect width="210" height="28" rx="4" fill="#1e293b" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#e2e8f0">🔀 Route to Domain Gateway</text>
-      </g>
+      <rect width="190" height="45" rx="8" fill="#182848" stroke="#38bdf8" />
+      <text x="95" y="24" class="card-title" font-size="12" fill="#38bdf8" text-anchor="middle">Perimeter Security</text>
+      <text x="95" y="38" class="card-sub" font-size="10" fill="#93c5fd" text-anchor="middle">WAF • DDoS Shield</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <rect width="190" height="40" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="25" class="card-sub" text-anchor="middle">🔑 OAuth2/JWT Validation</text>
+    </g>
+    <g transform="translate(20, 155)">
+      <rect width="190" height="40" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="25" class="card-sub" text-anchor="middle">🚦 Global Rate Limiter</text>
+    </g>
+    <g transform="translate(20, 205)">
+      <rect width="190" height="34" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="21" class="card-sub" text-anchor="middle">🔀 Path Route: :8080</text>
     </g>
   </g>
 
-  <!-- Flow 2 -->
-  <line x1="540" y1="240" x2="610" y2="240" stroke="#2563eb" stroke-width="2.5" marker-end="url(#m-arrow)" />
-  <rect x="545" y="215" width="60" height="18" rx="4" fill="#eff6ff" />
-  <text x="575" y="228" class="flow-label" text-anchor="middle">HTTP/2</text>
+  <!-- Flow 2: Edge -> Tier 2 -->
+  <path id="flow-e-d" d="M 545 240 L 615 240" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#m-arrow)" fill="none" />
+  <circle r="4.5" class="pulse-blue">
+    <animateMotion dur="1.7s" repeatCount="indefinite" path="M 545 240 L 615 240" />
+  </circle>
 
   <!-- Step 3: Tier 2 Domain Gateway -->
-  <g transform="translate(620, 100)">
-    <rect width="260" height="280" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#f-shadow)" />
-    <rect width="260" height="34" rx="8" fill="#312e81" />
-    <text x="130" y="22" font-family="-apple-system, sans-serif" font-size="12" font-weight="800" fill="#a5b4fc" text-anchor="middle">TIER 2: DOMAIN GATEWAY</text>
-    <g transform="translate(20, 50)">
-      <text class="node-title" fill="#ffffff">Domain Orchestrator</text>
-      <text y="20" class="node-text" fill="#c7d2fe">e.g. Mobility Gateway (:8081)</text>
-      <line x1="0" y1="35" x2="220" y2="35" stroke="#4338ca" />
-      <g transform="translate(0, 50)">
-        <rect width="220" height="28" rx="4" fill="#312e81" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#ffffff">⚡ REST ➔ gRPC Transcoder</text>
-      </g>
-      <g transform="translate(0, 85)">
-        <rect width="220" height="28" rx="4" fill="#312e81" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#ffffff">🚀 Reactive Scatter-Gather</text>
-      </g>
-      <g transform="translate(0, 120)">
-        <rect width="220" height="28" rx="4" fill="#312e81" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#ffffff">🧩 Bounded Context Guard</text>
-      </g>
-      <g transform="translate(0, 155)">
-        <rect width="220" height="28" rx="4" fill="#312e81" />
-        <text x="10" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="#ffffff">🔄 Fallbacks &amp; Circuit Breakers</text>
-      </g>
+  <g transform="translate(625, 115)">
+    <rect width="220" height="250" rx="10" fill="#0d111a" stroke="#7c3aed" stroke-dasharray="3 3" />
+    <text x="110" y="32" class="box-tag" fill="#c084fc" text-anchor="middle">TIER 2: DOMAIN GATEWAY</text>
+    <g transform="translate(15, 50)">
+      <rect width="190" height="45" rx="8" fill="#201a3d" stroke="#a855f7" />
+      <text x="95" y="24" class="card-title" font-size="12" fill="#d8b4fe" text-anchor="middle">Protocol Transcoder</text>
+      <text x="95" y="38" class="card-sub" font-size="10" fill="#e9d5ff" text-anchor="middle">REST ➔ Binary gRPC</text>
+    </g>
+    <g transform="translate(15, 105)">
+      <rect width="190" height="40" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="25" class="card-sub" text-anchor="middle">⚡ Parallel Scatter-Gather</text>
+    </g>
+    <g transform="translate(15, 155)">
+      <rect width="190" height="40" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="25" class="card-sub" text-anchor="middle">🛡️ Domain Boundary Guard</text>
+    </g>
+    <g transform="translate(15, 205)">
+      <rect width="190" height="34" rx="6" fill="#161b26" stroke="#30363d" />
+      <text x="95" y="21" class="card-sub" text-anchor="middle">🔄 Circuit Breakers (:8081)</text>
     </g>
   </g>
 
-  <!-- Flow 3: Fan out to gRPC microservices -->
-  <line x1="880" y1="210" x2="950" y2="160" stroke="#059669" stroke-width="2" marker-end="url(#m-arrow-green)" />
-  <line x1="880" y1="240" x2="950" y2="240" stroke="#059669" stroke-width="2" marker-end="url(#m-arrow-green)" />
-  <line x1="880" y1="270" x2="950" y2="320" stroke="#059669" stroke-width="2" marker-end="url(#m-arrow-green)" />
+  <!-- Flow 3: Tier 2 -> Leaf Services -->
+  <path id="flow-d-m1" d="M 845 200 L 905 160" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#m-arrow)" fill="none" />
+  <path id="flow-d-m2" d="M 845 240 L 905 240" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#m-arrow)" fill="none" />
+  <path id="flow-d-m3" d="M 845 280 L 905 320" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#m-arrow)" fill="none" />
+  
+  <circle r="4" class="pulse-blue">
+    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 845 200 L 905 160" />
+  </circle>
+  <circle r="4" class="pulse-blue">
+    <animateMotion dur="2.1s" repeatCount="indefinite" path="M 845 240 L 905 240" />
+  </circle>
+  <circle r="4" class="pulse-blue">
+    <animateMotion dur="1.9s" repeatCount="indefinite" path="M 845 280 L 905 320" />
+  </circle>
 
-  <!-- Step 4: Leaf Microservices -->
-  <g transform="translate(960, 110)">
-    <!-- Microservice 1 -->
-    <g transform="translate(0, 0)">
-      <rect width="200" height="70" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-      <text x="14" y="24" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#166534">01. supply-service</text>
-      <text x="14" y="42" font-family="-apple-system, sans-serif" font-size="10" fill="#15803d">gRPC Stub • findAvailable()</text>
-      <text x="14" y="58" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">💾 supply_db (PostgreSQL)</text>
+  <!-- Step 4: Leaf Services -->
+  <g transform="translate(915, 115)">
+    <!-- Service 1 -->
+    <g transform="translate(0, 10)">
+      <rect width="140" height="60" rx="8" fill="#161b26" stroke="#30363d" />
+      <text x="70" y="24" class="card-title" font-size="12" text-anchor="middle">Supply Svc</text>
+      <text x="70" y="44" class="card-sub" font-size="10" fill="#34d399" text-anchor="middle">gRPC :9001</text>
     </g>
-
-    <!-- Microservice 2 -->
-    <g transform="translate(0, 85)">
-      <rect width="200" height="70" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-      <text x="14" y="24" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#166534">03. dispatch-coordinator</text>
-      <text x="14" y="42" font-family="-apple-system, sans-serif" font-size="10" fill="#15803d">gRPC Stub • matchCandidate()</text>
-      <text x="14" y="58" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">💾 dispatch_db (PostgreSQL)</text>
+    <!-- Service 2 -->
+    <g transform="translate(0, 90)">
+      <rect width="140" height="60" rx="8" fill="#161b26" stroke="#30363d" />
+      <text x="70" y="24" class="card-title" font-size="12" text-anchor="middle">Dispatch Svc</text>
+      <text x="70" y="44" class="card-sub" font-size="10" fill="#34d399" text-anchor="middle">gRPC :9003</text>
     </g>
-
-    <!-- Microservice 3 -->
+    <!-- Service 3 -->
     <g transform="translate(0, 170)">
-      <rect width="200" height="70" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-      <text x="14" y="24" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#166534">05. routing-engine</text>
-      <text x="14" y="42" font-family="-apple-system, sans-serif" font-size="10" fill="#15803d">gRPC Stub • computeRoute()</text>
-      <text x="14" y="58" font-family="-apple-system, sans-serif" font-size="10" fill="#475569">💾 routing_db (PostgreSQL)</text>
+      <rect width="140" height="60" rx="8" fill="#161b26" stroke="#30363d" />
+      <text x="70" y="24" class="card-title" font-size="12" text-anchor="middle">Routing Svc</text>
+      <text x="70" y="44" class="card-sub" font-size="10" fill="#34d399" text-anchor="middle">gRPC :9005</text>
     </g>
   </g>
 
-  <!-- Bottom Legend -->
-  <g transform="translate(40, 420)">
-    <rect width="1120" height="36" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
-    <circle cx="20" cy="18" r="5" fill="#2563eb" />
-    <text x="32" y="22" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#1e293b">External Tier:</text>
-    <text x="110" y="22" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Public HTTPS JSON / Strict Rate Limiting / Token Introspection</text>
-
-    <circle cx="480" cy="18" r="5" fill="#059669" />
-    <text x="492" y="22" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#1e293b">Internal Tier:</text>
-    <text x="568" y="22" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Low-Latency Multiplexed gRPC / Protobuf / Zero Cross-DB Leaks</text>
+  <!-- Bottom Bar -->
+  <g transform="translate(55, 395)">
+    <rect width="1000" height="35" rx="6" fill="#0d1117" stroke="#21262d" />
+    <text x="20" y="22" class="box-tag" fill="#6e7681">PROTOCOL FLOW:</text>
+    <text x="145" y="22" class="card-sub" fill="#e6edf3">HTTPS Ingress ➔ Edge Decryption ➔ Internal HTTP/2 Multiplexing ➔ Non-Blocking gRPC Stubs</text>
   </g>
 </svg>

@@ -7,43 +7,38 @@
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](#)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
 
-> **The definitive enterprise implementation of Uber's Domain-Oriented Microservice Architecture (DOMA).**  
-> Solves microservice mesh sprawl, cascading failure cascades, and the "network tax" across **40 specialized microservices** partitioned into **6 bounded domains** using a **Two-Tier API Gateway** pattern, gRPC HTTP/2 multiplexing, and isolated persistence.
+> **The definitive enterprise reference implementation of Uber's Domain-Oriented Microservice Architecture (DOMA).**  
+> Solves microservice mesh sprawl, cascading outages, and the "network tax" across **40 specialized microservices** partitioned into **6 bounded domains** using a **Two-Tier API Gateway** pattern, gRPC HTTP/2 multiplexing, and isolated persistence.
 
 ---
 
-## 🗺️ Master System Architecture (40 Microservices)
+## 🗺️ Tiered Traffic Routing Architecture
 
-The full interactive topological layout of the **Two-Tier Gateway**, all **40 Microservices**, and their **Dedicated Databases**:
+The core canonical request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Microservices**:
 
 <p align="center">
-  <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA 40-Microservice Architecture Blueprint" width="100%">
+  <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA Tiered Traffic Routing Architecture" width="100%">
 </p>
 
 ---
 
-## ⚡ The DOMA Paradigm: Quick Comparison
+## 🔀 Inter-Gateway & Inter-Service Communication
 
-<table width="100%">
-<tr>
-<td width="50%" valign="top">
+A major challenge in microservice architectures is knowing **how services are allowed to talk to each other**. DOMA eliminates spaghetti dependencies through strict communication laws:
 
-### ❌ The Flat Microservice Mesh (Before DOMA)
-* **The "Network Tax":** Compounded additive latency across deep synchronous HTTP/1.1 JSON call chains.
-* **Cascading Failures:** Circular dependencies allow a leaf failure to freeze mission-critical dispatch.
-* **Schema Sprawl:** Zero encapsulation causes data contracts to leak across hundreds of services.
+<p align="center">
+  <img src="docs/images/inter-gateway-and-service-communication.svg" alt="Inter-Gateway & Inter-Service Communication Rules" width="100%">
+</p>
 
-</td>
-<td width="50%" valign="top">
+### 1. Inter-Sub Gateway Communication (Tier-2 to Tier-2)
+* **Allowed:** When a service in the `Trip Domain` requires billing data, it **never** calls `Payment Core` directly.
+* Instead, the `Trip Domain Gateway` invokes the `Billing Domain Gateway` over strongly-typed, backward-compatible **gRPC / Protocol Buffer** contracts.
+* **Benefit:** Each domain can refactor its internal leaf microservices without breaking peer domains.
 
-### ✅ Uber DOMA Architecture (This Repo)
-* **Two-Tier Gateway Model:** Edge Gateway isolates security; Domain Gateways isolate business domains.
-* **Parallel Scatter-Gather:** Internal calls execute concurrently over non-blocking gRPC stubs ($\max(T_i)$ latency).
-* **Strict Agnostic Rule:** Layered downward-only dependencies eliminate circular loops completely.
-
-</td>
-</tr>
-</table>
+### 2. Internal Microservice Communication (Within a Domain)
+* **Synchronous Scatter-Gather:** The Domain Gateway acts as a non-blocking orchestrator, querying leaf services in parallel using Project Reactor (`Mono.zip`).
+* **Asynchronous Domain Events:** Inter-service data synchronization within the domain is published asynchronously using the **Transactional Outbox Pattern** and Kafka.
+* **Prohibited:** Direct cross-domain synchronous calls between leaf services (e.g. `Driver Match` $\to$ `Payment Core`) are blocked at both compile-time (ArchUnit tests) and runtime (Network Security Policies).
 
 ---
 
