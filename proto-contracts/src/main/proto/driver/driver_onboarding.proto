@@ -1,0 +1,19 @@
+syntax = "proto3";
+package uber.driver;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.driver";
+
+service DriverOnboardingService {
+  rpc VerifyDriver (VerifyDriverRequest) returns (DriverStatusResponse);
+}
+
+message VerifyDriverRequest {
+  string driver_id = 1;
+  string license_number = 2;
+}
+
+message DriverStatusResponse {
+  string driver_id = 1;
+  string compliance_status = 2;
+  bool is_active = 3;
+}
