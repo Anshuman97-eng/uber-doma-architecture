@@ -1,0 +1,14 @@
+server:
+  port: 9112
+
+grpc:
+  server:
+    port: 9012
+
+spring:
+  application:
+    name: safety-telematics-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/safety_telematics_service_db
+    username: uber
+    password: uber_password
