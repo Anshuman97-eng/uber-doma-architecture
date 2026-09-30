@@ -216,15 +216,26 @@ TASK_TEMPLATES = [
 def main():
     log("🚀 Starting Full 867-Issue Batch Publisher...")
 
-    # Load existing issue titles from GitHub
-    existing_raw = subprocess.run(["gh", "issue", "list", "--repo", REPO, "--json", "title", "--limit", "1000"], capture_output=True, text=True)
+    # Fetch all existing issues from GitHub using pagination
+    log("Fetching all existing issues from GitHub...")
     existing_titles = set()
-    if existing_raw.returncode == 0:
+    page = 1
+    while True:
         try:
-            for item in json.loads(existing_raw.stdout):
+            res = subprocess.run(
+                ["gh", "api", f"repos/{REPO}/issues?state=all&per_page=100&page={page}"],
+                capture_output=True, text=True, check=True
+            )
+            items = json.loads(res.stdout)
+            if not items:
+                break
+            for item in items:
                 existing_titles.add(item["title"])
-        except Exception:
-            pass
+            page += 1
+        except Exception as e:
+            log(f"Warning fetching page {page}: {e}")
+            break
+
     log(f"Found {len(existing_titles)} pre-existing issues on GitHub.")
 
     # Build the full 867 issue catalog
@@ -342,15 +353,26 @@ def main():
         while not success and retries < 5:
             try:
                 res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-                published += 1
-                log(f"[{published + skipped}/{len(all_issues)}] ✓ Created: {issue['title']}")
-                success = True
-                time.sleep(2.5) # Safe rate-limit delay
+                out = res.stdout.strip()
+                if "issues/" in out:
+                    url = [line.strip() for line in out.splitlines() if "issues/" in line][-1]
+                    published += 1
+                    log(f"[{published + skipped}/{len(all_issues)}] ✓ Created [{url}]: {issue['title']}")
+                    success = True
+                    time.sleep(2.5) # Safe rate-limit delay
+                else:
+                    log(f"⚠️ Warning: No issue URL in output for '{issue['title']}'. Output: {out}. Retrying...")
+                    time.sleep(5)
+                    retries += 1
             except subprocess.CalledProcessError as e:
                 err = e.stderr.strip()
                 if "abuse" in err.lower() or "secondary rate limit" in err.lower() or "403" in err:
                     log(f"⚠️ Secondary rate limit hit. Sleeping 60s before retry... (Attempt {retries+1}/5)")
                     time.sleep(60)
+                    retries += 1
+                elif "connection reset" in err.lower() or "timeout" in err.lower() or "read tcp" in err.lower():
+                    log(f"⚠️ Network error ({err}). Sleeping 10s before retry... (Attempt {retries+1}/5)")
+                    time.sleep(10)
                     retries += 1
                 else:
                     log(f"✗ Error creating issue '{issue['title']}': {err}")
