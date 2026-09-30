@@ -1,0 +1,14 @@
+server:
+  port: 9104
+
+grpc:
+  server:
+    port: 9004
+
+spring:
+  application:
+    name: dynamic-surge-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dynamic_surge_service_db
+    username: uber
+    password: uber_password
