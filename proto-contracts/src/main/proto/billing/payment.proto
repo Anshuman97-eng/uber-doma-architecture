@@ -1,0 +1,28 @@
+syntax = "proto3";
+package uber.billing;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.billing";
+
+service PaymentOrchestratorService {
+  rpc AuthorizePayment (AuthorizeRequest) returns (PaymentResponse);
+  rpc CapturePayment (CaptureRequest) returns (PaymentResponse);
+}
+
+message AuthorizeRequest {
+  string payment_token = 1;
+  string rider_id = 2;
+  double amount = 3;
+  string currency = 4;
+  string trip_id = 5;
+}
+
+message CaptureRequest {
+  string transaction_id = 1;
+  double final_amount = 2;
+}
+
+message PaymentResponse {
+  string transaction_id = 1;
+  string status = 2;
+  string error_code = 3;
+}
