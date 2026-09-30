@@ -1,0 +1,14 @@
+server:
+  port: 9109
+
+grpc:
+  server:
+    port: 9009
+
+spring:
+  application:
+    name: trip-state-machine-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trip_state_machine_service_db
+    username: uber
+    password: uber_password
