@@ -1,0 +1,14 @@
+server:
+  port: 9105
+
+grpc:
+  server:
+    port: 9005
+
+spring:
+  application:
+    name: routing-engine-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/routing_engine_service_db
+    username: uber
+    password: uber_password
