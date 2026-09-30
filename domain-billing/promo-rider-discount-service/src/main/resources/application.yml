@@ -1,0 +1,14 @@
+server:
+  port: 9121
+
+grpc:
+  server:
+    port: 9021
+
+spring:
+  application:
+    name: promo-rider-discount-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/promo_rider_discount_service_db
+    username: uber
+    password: uber_password

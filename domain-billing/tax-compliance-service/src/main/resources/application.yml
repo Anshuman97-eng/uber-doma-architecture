@@ -1,0 +1,14 @@
+server:
+  port: 9122
+
+grpc:
+  server:
+    port: 9022
+
+spring:
+  application:
+    name: tax-compliance-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tax_compliance_service_db
+    username: uber
+    password: uber_password

@@ -1,0 +1,14 @@
+server:
+  port: 9120
+
+grpc:
+  server:
+    port: 9020
+
+spring:
+  application:
+    name: fare-split-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fare_split_service_db
+    username: uber
+    password: uber_password
