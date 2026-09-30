@@ -7,14 +7,14 @@
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](#)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
 
-> **The definitive enterprise reference implementation of Uber's Domain-Oriented Microservice Architecture (DOMA).**  
-> Solves microservice mesh sprawl, cascading outages, and the "network tax" across **40 specialized microservices** partitioned into **6 bounded domains** using a **Two-Tier API Gateway** pattern, gRPC HTTP/2 multiplexing, and isolated persistence.
+> **The definitive enterprise reference implementation of Uber's Domain-Oriented Microservice Architecture (DOMA) for Global Ride Sharing.**  
+> Partitions **40 production-grade ride-sharing microservices** into **6 bounded domains**, orchestrated through a **Two-Tier API Gateway** pattern, gRPC HTTP/2 multiplexing, and isolated persistence.
 
 ---
 
 ## 🗺️ Tiered Traffic Routing Architecture
 
-The core canonical request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Microservices**:
+The core canonical request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices**:
 
 <p align="center">
   <img src="docs/images/uber-doma-architecture-dark.svg" alt="Uber DOMA Tiered Traffic Routing Architecture" width="100%">
@@ -39,6 +39,16 @@ A major challenge in microservice architectures is knowing **how services are al
 * **Synchronous Scatter-Gather:** The Domain Gateway acts as a non-blocking orchestrator, querying leaf services in parallel using Project Reactor (`Mono.zip`).
 * **Asynchronous Domain Events:** Inter-service data synchronization within the domain is published asynchronously using the **Transactional Outbox Pattern** and Kafka.
 * **Prohibited:** Direct cross-domain synchronous calls between leaf services (e.g. `Driver Match` $\to$ `Payment Core`) are blocked at both compile-time (ArchUnit tests) and runtime (Network Security Policies).
+
+---
+
+## 🗺️ Master Ride-Sharing Topology (All 40 Services)
+
+Below is the complete architectural blueprint detailing all **40 specialized ride-sharing microservices** arranged across their 6 bounded domains:
+
+<p align="center">
+  <img src="docs/images/doma-master-architecture.svg" alt="Uber DOMA 40-Microservice Ride-Sharing Architecture" width="100%">
+</p>
 
 ---
 
@@ -107,7 +117,7 @@ Dependencies flow strictly downward. A lower layer **never invokes an upper laye
 
 ---
 
-## 🧩 Complete 40-Microservice Domain Matrix
+## 🧩 Complete 40 Ride-Sharing Microservices Matrix
 
 <details open>
 <summary><b>🚗 Domain 1: Mobility & Dispatch (DISCO) — Gateway Port :8081</b></summary>
@@ -115,14 +125,14 @@ Dependencies flow strictly downward. A lower layer **never invokes an upper laye
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **01** | `supply-service` | `gRPC :9001` | Real-time driver duty state, location ingestion & availability | `supply_db` |
-| **02** | `demand-service` | `gRPC :9002` | Ingests rider requests and geospatial hot-zones | `demand_db` |
-| **03** | `dispatch-coordinator` | `gRPC :9003` | Core algorithmic matching engine (DISCO) | `dispatch_db` |
-| **04** | `dynamic-pricing` | `gRPC :9004` | Real-time surge pricing multiplier calculations | `pricing_db` |
-| **05** | `routing-engine` | `gRPC :9005` | Turn-by-turn shortest path routing (Gurafu) | `routing_db` |
-| **06** | `eta-calculation` | `gRPC :9006` | ML-based live travel duration & delay prediction | `eta_db` |
-| **07** | `geospatial-h3` | `gRPC :9007` | Hexagonal spatial indexing (Uber H3) | `h3_db` |
-| **08** | `fleet-asset` | `gRPC :9008` | Fleet partner vehicles and asset inventory | `fleet_db` |
+| **01** | `supply-locator-service` | `gRPC :9001` | Real-time driver GPS tracking, duty status (`ONLINE`, `OFFLINE`) | `supply_db` |
+| **02** | `demand-pin-service` | `gRPC :9002` | Ingests rider pickup pin drops and real-time demand hot-zones | `demand_db` |
+| **03** | `dispatch-coordinator-service` | `gRPC :9003` | Core algorithmic matching engine (DISCO) pairing rider & driver | `dispatch_db` |
+| **04** | `dynamic-surge-service` | `gRPC :9004` | Real-time dynamic pricing / surge multiplier calculation engine | `pricing_db` |
+| **05** | `routing-engine-service` | `gRPC :9005` | Turn-by-turn shortest path routing and street graphs (Gurafu) | `routing_db` |
+| **06** | `deep-eta-service` | `gRPC :9006` | DeepETA machine learning travel duration & pickup prediction | `eta_db` |
+| **07** | `h3-spatial-index-service` | `gRPC :9007` | Uber H3 hexagonal hierarchical spatial indexing for geo-queries | `h3_db` |
+| **08** | `pool-batching-service` | `gRPC :9008` | UberX Share / Pool carpool detour routing & rider batching | `pool_db` |
 
 </details>
 
@@ -132,74 +142,74 @@ Dependencies flow strictly downward. A lower layer **never invokes an upper laye
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **09** | `trip-state-machine` | `gRPC :9009` | Central lifecycle state engine (`REQUESTED` $\to$ `COMPLETED`) | `trip_db` |
-| **10** | `uber-pool-routing` | `gRPC :9010` | Carpool detour optimization and passenger batching | `pool_db` |
-| **11** | `reservation-booking` | `gRPC :9011` | Advance trip scheduling and pre-dispatch allocation | `reserve_db` |
-| **12** | `safety-telematics` | `gRPC :9012` | Gyro/accelerometer crash and speeding detection | `safety_db` |
-| **13** | `lost-item` | `gRPC :9013` | Lost and found resolution and ticket workflows | `lost_db` |
-| **14** | `toll-calculation` | `gRPC :9014` | Electronic toll lookups and highway surcharges | `toll_db` |
-| **15** | `driver-compliance` | `gRPC :9015` | Hours of service rules and municipal license compliance | `compliance_db` |
+| **09** | `trip-state-machine-service` | `gRPC :9009` | Central lifecycle state engine (`REQUESTED` $\to$ `COMPLETED`) | `trip_db` |
+| **10** | `trip-reservation-service` | `gRPC :9010` | Advance trip bookings, calendar reservations (Uber Reserve) | `reserve_db` |
+| **11** | `trip-cancellation-service` | `gRPC :9011` | Cancellation fee evaluation, timeout refunds & dispute logs | `cancel_db` |
+| **12** | `safety-telematics-service` | `gRPC :9012` | Gyroscope/accelerometer sensor crash detection (RideCheck) | `safety_db` |
+| **13** | `in-trip-chat-service` | `gRPC :9013` | End-to-end masked messaging and WebRTC calling during trips | `chat_db` |
+| **14** | `lost-and-found-service` | `gRPC :9014` | Post-trip resolution workflows for belongings left in vehicles | `lost_db` |
+| **15** | `toll-highway-surcharge-service` | `gRPC :9015` | Automated electronic toll road detection (EZPass/FasTrak) | `toll_db` |
 
 </details>
 
 <details open>
-<summary><b>💳 Domain 3: Billing, Payments & Risk — Gateway Port :8083</b></summary>
+<summary><b>💳 Domain 3: Billing, Payments & Driver Settlement — Gateway Port :8083</b></summary>
 <br>
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **16** | `fare-quotation` | `gRPC :9016` | Guaranteed upfront pricing quotes & currency conversion | `fare_db` |
-| **17** | `payment-orchestrator` | `gRPC :9017` | Multi-PSP payment gateway integration (Stripe/Adyen) | `payment_db` |
-| **18** | `invoicing-ledger` | `gRPC :9018` | Immutable double-entry bookkeeping ledger & VAT receipts | `ledger_db` |
-| **19** | `driver-payout` | `gRPC :9019` | Instant Pay disbursement and bank ACH settlements | `payout_db` |
-| **20** | `fraud-risk-scoring` | `gRPC :9020` | Real-time fraud scoring and GPS spoofing detection | `fraud_db` |
-| **21** | `promo-incentives` | `gRPC :9021` | Promo codes, coupons, and driver bonus quests | `promo_db` |
-| **22** | `tax-compliance` | `gRPC :9022` | Multi-jurisdiction VAT, GST, and municipal taxes | `tax_db` |
+| **16** | `fare-quotation-service` | `gRPC :9016` | Guaranteed upfront pricing quotes, base rates & currency math | `fare_db` |
+| **17** | `payment-orchestrator-service` | `gRPC :9017` | Multi-PSP payment gateway integration (Stripe, Adyen, Apple Pay) | `payment_db` |
+| **18** | `invoicing-ledger-service` | `gRPC :9018` | Immutable double-entry bookkeeping ledger & customer tax receipts | `ledger_db` |
+| **19** | `driver-instant-payout-service` | `gRPC :9019` | Instant Pay disbursement, debit card payouts & weekly bank ACH | `payout_db` |
+| **20** | `fare-split-service` | `gRPC :9020` | Multi-passenger ride fare splitting engine and joint authorizations | `split_db` |
+| **21** | `promo-rider-discount-service` | `gRPC :9021` | Ride promo codes, coupons, and seasonal discounts | `promo_db` |
+| **22** | `tax-compliance-service` | `gRPC :9022` | Airport pickup surcharges, state excise taxes & VAT compliance | `tax_db` |
 
 </details>
 
 <details open>
-<summary><b>🍔 Domain 4: Delivery & Marketplace (Uber Eats) — Gateway Port :8084</b></summary>
+<summary><b>🚙 Domain 4: Driver Partner & Vehicle Asset — Gateway Port :8084</b></summary>
 <br>
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **23** | `merchant-catalog` | `gRPC :9023` | Restaurant store menus, modifiers, and availability | `catalog_db` |
-| **24** | `order-management` | `gRPC :9024` | Kitchen order lifecycle and item preparation tracking | `order_db` |
-| **25** | `courier-dispatch` | `gRPC :9025` | Two-wheeler courier matching & delivery route batching | `courier_db` |
-| **26** | `kitchen-prep-estimator` | `gRPC :9026` | ML model forecasting food preparation durations | `kitchen_db` |
-| **27** | `eats-cart` | `gRPC :9027` | Multi-merchant basket cache and tip calculations | `cart_db` |
-| **28** | `merchant-settlement` | `gRPC :9028` | Restaurant commissions, adjustments, and payouts | `settle_db` |
+| **23** | `driver-onboarding-service` | `gRPC :9023` | Driver registration, KYC, and motor vehicle records (MVR) | `driver_kyc_db` |
+| **24** | `vehicle-registry-service` | `gRPC :9024` | Vehicle make, model, license plate, class (UberX, Black, XL) | `vehicle_db` |
+| **25** | `driver-compliance-service` | `gRPC :9025` | Hours of service (HOS) fatigue monitoring & rest enforcement | `hos_db` |
+| **26** | `fleet-partner-service` | `gRPC :9026` | Fleet owner vehicle sharing and rental partner inventory | `fleet_db` |
+| **27** | `driver-quest-incentives-service` | `gRPC :9027` | Driver quest bonuses (e.g. 50 trips for $100) & streak quests | `quest_db` |
+| **28** | `driver-earnings-analytics-service` | `gRPC :9028` | Hourly wage projections, weekly summaries & expense analytics | `analytics_db` |
 
 </details>
 
 <details open>
-<summary><b>👤 Domain 5: Customer Identity & Engagement — Gateway Port :8085</b></summary>
+<summary><b>👤 Domain 5: Rider Identity & Trust — Gateway Port :8085</b></summary>
 <br>
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **29** | `rider-profile` | `gRPC :9029` | Rider accounts, saved locations, and preferences | `rider_db` |
-| **30** | `driver-profile` | `gRPC :9030` | Driver credentials, background checks, and vehicle docs | `driver_db` |
-| **31** | `auth-session` | `gRPC :9031` | SSO, biometric authentication, MFA, and JWT tokens | `auth_db` |
-| **32** | `ratings-feedback` | `gRPC :9032` | Mutual 5-star ratings and driver reviews | `rating_db` |
-| **33** | `loyalty-uber-one` | `gRPC :9033` | Uber One subscription perks and loyalty points | `loyalty_db` |
-| **34** | `comms-dispatch` | `gRPC :9034` | High-throughput Push Notifications, SMS, and Email | `comms_db` |
+| **29** | `rider-profile-service` | `gRPC :9029` | Rider accounts, home/work saved spots, and ride preferences | `rider_db` |
+| **30** | `auth-security-service` | `gRPC :9030` | SSO, biometric authentication, MFA, and JWT session tokens | `auth_db` |
+| **31** | `mutual-rating-service` | `gRPC :9031` | Two-way mutual 5-star rating aggregation & driver feedback | `rating_db` |
+| **32** | `uber-one-membership-service` | `gRPC :9032` | Uber One subscription perks, 5% ride cashback & priority pickup | `uberone_db` |
+| **33** | `fraud-gps-spoofing-service` | `gRPC :9033` | Anti-fraud ML detector flagging GPS spoofing & ghost rides | `fraud_db` |
+| **34** | `omnichannel-notifications-service` | `gRPC :9034` | High-throughput Push Notifications (APNs/FCM), SMS & Receipts | `notify_db` |
 
 </details>
 
 <details open>
-<summary><b>⚙️ Domain 6: Platform Infrastructure (Agnostic Layer)</b></summary>
+<summary><b>⚙️ Domain 6: Core Platform & Telemetry Infrastructure (Agnostic Layer)</b></summary>
 <br>
 
 | # | Microservice | Protocol / Port | Core Responsibility | Persistence |
 | :---: | :--- | :---: | :--- | :--- |
-| **35** | `telemetry-ingest` | `gRPC :9035` | High-frequency GPS ping stream ingestion pipeline | TimescaleDB |
-| **36** | `event-stream-hub` | `gRPC :9036` | Kafka / Pulsar CDC Event Bus bridge | Kafka Cluster |
-| **37** | `experimentation-flipr` | `gRPC :9037` | Dynamic feature flags and A/B test parameter distribution | `flipr_db` |
-| **38** | `audit-compliance` | `gRPC :9038` | Immutable audit log for GDPR and regulatory compliance | `audit_db` |
-| **39** | `service-directory` | `gRPC :9039` | Dynamic gRPC health check registry and service discovery | In-Memory |
-| **40** | `rate-limiter-quota` | `gRPC :9040` | Distributed token-bucket rate limiter and tenant quotas | Redis Cluster |
+| **35** | `telemetry-gps-ingestion-service` | `gRPC :9035` | High-frequency GPS ping stream ingestion pipeline | TimescaleDB |
+| **36** | `event-streaming-hub-service` | `gRPC :9036` | Kafka / Pulsar real-time CDC message bus bridge | Kafka Cluster |
+| **37** | `experimentation-flipr-service` | `gRPC :9037` | Dynamic feature flags and A/B test parameter distribution (XP) | `flipr_db` |
+| **38** | `audit-compliance-service` | `gRPC :9038` | Immutable audit log for GDPR and regulatory compliance | `audit_db` |
+| **39** | `service-registry-discovery-service` | `gRPC :9039` | Dynamic gRPC health check registry and service discovery | In-Memory |
+| **40** | `distributed-rate-limiter-service` | `gRPC :9040` | Distributed token-bucket rate limiter and tenant quotas | Redis Cluster |
 
 </details>
 
