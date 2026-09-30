@@ -1,0 +1,14 @@
+server:
+  port: 9133
+
+grpc:
+  server:
+    port: 9033
+
+spring:
+  application:
+    name: fraud-gps-spoofing-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fraud_gps_spoofing_service_db
+    username: uber
+    password: uber_password

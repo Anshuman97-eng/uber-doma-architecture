@@ -1,0 +1,14 @@
+server:
+  port: 9132
+
+grpc:
+  server:
+    port: 9032
+
+spring:
+  application:
+    name: uber-one-membership-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/uber_one_membership_service_db
+    username: uber
+    password: uber_password

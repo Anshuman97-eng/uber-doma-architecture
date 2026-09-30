@@ -1,0 +1,14 @@
+server:
+  port: 9134
+
+grpc:
+  server:
+    port: 9034
+
+spring:
+  application:
+    name: omnichannel-notifications-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/omnichannel_notifications_service_db
+    username: uber
+    password: uber_password
