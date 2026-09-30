@@ -1,0 +1,14 @@
+server:
+  port: 9137
+
+grpc:
+  server:
+    port: 9037
+
+spring:
+  application:
+    name: experimentation-flipr-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/experimentation_flipr_service_db
+    username: uber
+    password: uber_password

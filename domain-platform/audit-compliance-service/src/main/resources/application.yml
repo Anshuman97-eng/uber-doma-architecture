@@ -1,0 +1,14 @@
+server:
+  port: 9138
+
+grpc:
+  server:
+    port: 9038
+
+spring:
+  application:
+    name: audit-compliance-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/audit_compliance_service_db
+    username: uber
+    password: uber_password

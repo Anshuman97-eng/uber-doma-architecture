@@ -1,0 +1,14 @@
+server:
+  port: 9139
+
+grpc:
+  server:
+    port: 9039
+
+spring:
+  application:
+    name: service-registry-discovery-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/service_registry_discovery_service_db
+    username: uber
+    password: uber_password

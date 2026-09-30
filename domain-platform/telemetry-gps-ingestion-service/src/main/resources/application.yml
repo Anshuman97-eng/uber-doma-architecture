@@ -1,0 +1,14 @@
+server:
+  port: 9135
+
+grpc:
+  server:
+    port: 9035
+
+spring:
+  application:
+    name: telemetry-gps-ingestion-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/telemetry_gps_ingestion_service_db
+    username: uber
+    password: uber_password

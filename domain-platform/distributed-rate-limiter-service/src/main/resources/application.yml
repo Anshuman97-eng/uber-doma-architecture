@@ -1,0 +1,14 @@
+server:
+  port: 9140
+
+grpc:
+  server:
+    port: 9040
+
+spring:
+  application:
+    name: distributed-rate-limiter-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/distributed_rate_limiter_service_db
+    username: uber
+    password: uber_password
