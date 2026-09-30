@@ -1,0 +1,14 @@
+server:
+  port: 9117
+
+grpc:
+  server:
+    port: 9017
+
+spring:
+  application:
+    name: payment-orchestrator-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_orchestrator_service_db
+    username: uber
+    password: uber_password

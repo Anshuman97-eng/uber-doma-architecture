@@ -1,0 +1,14 @@
+server:
+  port: 9116
+
+grpc:
+  server:
+    port: 9016
+
+spring:
+  application:
+    name: fare-quotation-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fare_quotation_service_db
+    username: uber
+    password: uber_password
