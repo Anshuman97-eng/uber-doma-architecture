@@ -1,0 +1,14 @@
+server:
+  port: 9106
+
+grpc:
+  server:
+    port: 9006
+
+spring:
+  application:
+    name: deep-eta-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/deep_eta_service_db
+    username: uber
+    password: uber_password
