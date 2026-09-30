@@ -1,0 +1,14 @@
+server:
+  port: 9119
+
+grpc:
+  server:
+    port: 9019
+
+spring:
+  application:
+    name: driver-instant-payout-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/driver_instant_payout_service_db
+    username: uber
+    password: uber_password

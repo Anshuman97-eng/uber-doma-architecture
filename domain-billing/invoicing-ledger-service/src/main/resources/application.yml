@@ -1,0 +1,14 @@
+server:
+  port: 9118
+
+grpc:
+  server:
+    port: 9018
+
+spring:
+  application:
+    name: invoicing-ledger-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/invoicing_ledger_service_db
+    username: uber
+    password: uber_password
