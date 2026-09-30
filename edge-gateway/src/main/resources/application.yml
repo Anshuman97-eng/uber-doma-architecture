@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: edge-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: mobility-domain
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/mobility/**
+        - id: trip-domain
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/trips/**
+        - id: billing-domain
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v1/billing/**
+        - id: driver-domain
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v1/driver/**
+        - id: rider-domain
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/rider/**
