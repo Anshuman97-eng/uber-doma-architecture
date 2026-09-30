@@ -1,0 +1,21 @@
+syntax = "proto3";
+package uber.platform;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.platform";
+
+service TelemetryIngestionService {
+  rpc IngestGpsPing (GpsPing) returns (TelemetryAck);
+}
+
+message GpsPing {
+  string device_id = 1;
+  double lat = 2;
+  double lng = 3;
+  double altitude = 4;
+  double speed_mps = 5;
+  int64 timestamp = 6;
+}
+
+message TelemetryAck {
+  bool received = 1;
+}
