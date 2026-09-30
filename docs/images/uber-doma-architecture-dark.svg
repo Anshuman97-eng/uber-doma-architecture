@@ -37,13 +37,13 @@
       <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#38bdf8" flood-opacity="0.35"/>
     </filter>
 
-    <marker id="arrowhead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#6e7681" />
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
     </marker>
-    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399" />
     </marker>
-    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 8 5 L 0 9 z" fill="#ef4444" />
     </marker>
   </defs>
@@ -92,14 +92,14 @@
     </g>
 
     <!-- Paths from Edge Gateway to Domain Gateways -->
-    <path id="path-edge-trip" d="M 370 193 C 330 193 250 193 250 255" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <path id="path-edge-trip" d="M 370 193 C 330 193 245 193 245 281" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2.2s" repeatCount="indefinite" path="M 370 193 C 330 193 250 193 250 255" />
+      <animateMotion dur="2.2s" repeatCount="indefinite" path="M 370 193 C 330 193 245 193 245 281" />
     </circle>
 
-    <path id="path-edge-fare" d="M 540 193 C 580 193 660 193 660 255" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <path id="path-edge-fare" d="M 540 193 C 580 193 665 193 665 281" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2.2s" repeatCount="indefinite" path="M 540 193 C 580 193 660 193 660 255" />
+      <animateMotion dur="2.2s" repeatCount="indefinite" path="M 540 193 C 580 193 665 193 665 281" />
     </circle>
 
     <!-- ================= 3. DOMAIN GATEWAY LAYER ================= -->
@@ -129,25 +129,29 @@
       </circle>
     </g>
 
-    <!-- Drops from Gateways to Microservice Contexts -->
-    <path id="path-trip-driver" d="M 170 361 C 170 385 140 405 140 450" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <!-- ================= EXACT CONNECTOR PATHS DOWN TO MICROSERVICES ================= -->
+    <!-- Path 1: Trip Gateway to Driver Match (lands directly at top of Driver Match card: x=152, y=485) -->
+    <path id="path-trip-driver" d="M 200 361 C 200 410 152 425 152 485" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2s" repeatCount="indefinite" path="M 170 361 C 170 385 140 405 140 450" />
+      <animateMotion dur="2s" repeatCount="indefinite" path="M 200 361 C 200 410 152 425 152 485" />
     </circle>
 
-    <path id="path-trip-route" d="M 230 361 C 230 395 320 405 320 450" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <!-- Path 2: Trip Gateway to Route Planner (lands directly at top of Route Planner card: x=342, y=485) -->
+    <path id="path-trip-route" d="M 290 361 C 290 410 342 425 342 485" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2.3s" repeatCount="indefinite" path="M 230 361 C 230 395 320 405 320 450" />
+      <animateMotion dur="2.3s" repeatCount="indefinite" path="M 290 361 C 290 410 342 425 342 485" />
     </circle>
 
-    <path id="path-fare-payment" d="M 585 361 C 585 395 500 405 500 450" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <!-- Path 3: Fare Gateway to Payment Core (lands directly at top of Payment Core card: x=568, y=485) -->
+    <path id="path-fare-payment" d="M 620 361 C 620 410 568 425 568 485" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2.1s" repeatCount="indefinite" path="M 585 361 C 585 395 500 405 500 450" />
+      <animateMotion dur="2.1s" repeatCount="indefinite" path="M 620 361 C 620 410 568 425 568 485" />
     </circle>
 
-    <path id="path-fare-invoice" d="M 645 361 C 645 385 680 405 680 450" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
+    <!-- Path 4: Fare Gateway to Invoice Engine (lands directly at top of Invoice Engine card: x=758, y=485) -->
+    <path id="path-fare-invoice" d="M 710 361 C 710 410 758 425 758 485" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="2 3" marker-end="url(#arrowhead)" fill="none" />
     <circle r="4" class="pulse">
-      <animateMotion dur="2.4s" repeatCount="indefinite" path="M 645 361 C 645 385 680 405 680 450" />
+      <animateMotion dur="2.4s" repeatCount="indefinite" path="M 710 361 C 710 410 758 425 758 485" />
     </circle>
 
     <!-- ================= 4. MICROSERVICE LAYER ================= -->
@@ -160,14 +164,14 @@
         <rect width="365" height="130" rx="8" fill="#0d111a" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="4 2" />
         <text x="14" y="20" class="domain-ctx-tag" fill="#60a5fa">BOUNDED CONTEXT: TRIP DOMAIN</text>
 
-        <!-- Driver Match -->
+        <!-- Driver Match (top is at y=34, center is at x=87) -->
         <g transform="translate(15, 34)">
           <rect width="145" height="68" rx="8" fill="#161b26" stroke="#28303e" stroke-width="1.2" />
           <text x="72" y="30" class="svc-title" text-anchor="middle">Driver Match</text>
           <text x="72" y="48" class="svc-sub" text-anchor="middle">Microservice</text>
         </g>
 
-        <!-- Route Planner -->
+        <!-- Route Planner (top is at y=34, center is at x=277) -->
         <g transform="translate(205, 34)">
           <rect width="145" height="68" rx="8" fill="#161b26" stroke="#28303e" stroke-width="1.2" />
           <text x="72" y="30" class="svc-title" text-anchor="middle">Route Planner</text>
@@ -182,7 +186,6 @@
           <animateMotion dur="1.2s" repeatCount="indefinite" path="M 160 68 L 205 68" />
         </circle>
 
-        <!-- Context explanation label -->
         <text x="182" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#34d399" text-anchor="middle">✔ Intra-Domain Interservice gRPC IPC</text>
       </g>
 
@@ -213,12 +216,10 @@
           <animateMotion dur="1.2s" repeatCount="indefinite" path="M 160 68 L 205 68" />
         </circle>
 
-        <!-- Context explanation label -->
         <text x="182" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#34d399" text-anchor="middle">✔ Intra-Domain Interservice gRPC IPC</text>
       </g>
 
       <!-- ================= PROHIBITED DIRECT CROSS-DOMAIN LEAF CALL ================= -->
-      <!-- Red dashed forbidden path between Route Planner and Payment Core -->
       <g transform="translate(0, 175)">
         <path id="forbidden-cross-call" d="M 297 0 C 297 32 522 32 522 0" stroke="#ef4444" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-red)" fill="none" />
         <rect x="330" y="18" width="180" height="24" rx="4" fill="#201116" stroke="#ef4444" stroke-width="1.2" />
