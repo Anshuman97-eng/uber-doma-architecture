@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.uber.doma</groupId>
+        <artifactId>uber-doma-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>domain-billing</artifactId>
+    <packaging>pom</packaging>
+    <name>Domain 3: Billing, Payments and Driver Settlement</name>
+
+    <modules>
+        <module>billing-domain-gateway</module>
+        <module>fare-quotation-service</module>
+        <module>payment-orchestrator-service</module>
+        <module>invoicing-ledger-service</module>
+        <module>driver-instant-payout-service</module>
+        <module>fare-split-service</module>
+        <module>promo-rider-discount-service</module>
+        <module>tax-compliance-service</module>
+    </modules>
+</project>
