@@ -1,0 +1,439 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1150" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 26px; font-weight: 800; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 500; fill: #64748b; }
+      .box-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; }
+      .box-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; fill: #475569; }
+      .tier-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+      .pill-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; }
+      .badge-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; }
+    </style>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+    <filter id="card-shadow" x="-4%" y="-4%" width="108%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.04"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1150" fill="url(#bg-grad)" rx="16" />
+  <rect x="20" y="20" width="1560" height="1110" fill="none" stroke="#e2e8f0" stroke-width="1.5" rx="14" />
+
+  <!-- Title Block -->
+  <g transform="translate(60, 55)">
+    <text class="title">UBER DOMA: 40-MICROSERVICE REFERENCE BLUEPRINT</text>
+    <text y="24" class="subtitle">Two-Tier Gateway Topology • Strict Bounded Contexts • gRPC HTTP/2 Backplane • Database-per-Service</text>
+    <rect x="1220" y="-18" width="260" height="34" rx="17" fill="#0f172a" />
+    <text x="1350" y="4" class="pill-text" fill="#38bdf8" text-anchor="middle">DOMA ARCHITECTURE REFERENCE</text>
+  </g>
+
+  <!-- ================= TOP: CLIENTS ================= -->
+  <g transform="translate(60, 95)">
+    <rect width="1480" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+    <text x="25" y="32" class="tier-label" fill="#0f172a">INGRESS CLIENTS</text>
+    <g transform="translate(240, 10)">
+      <rect width="210" height="32" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="105" y="20" class="pill-text" fill="#1e293b" text-anchor="middle">📱 Rider Mobile App (iOS/Android)</text>
+    </g>
+    <g transform="translate(470, 10)">
+      <rect width="210" height="32" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="105" y="20" class="pill-text" fill="#1e293b" text-anchor="middle">🚗 Driver Partner App</text>
+    </g>
+    <g transform="translate(700, 10)">
+      <rect width="210" height="32" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="105" y="20" class="pill-text" fill="#1e293b" text-anchor="middle">🍔 Uber Eats Customer &amp; Courier</text>
+    </g>
+    <g transform="translate(930, 10)">
+      <rect width="210" height="32" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="105" y="20" class="pill-text" fill="#1e293b" text-anchor="middle">🏪 Merchant Portal &amp; Web</text>
+    </g>
+    <g transform="translate(1160, 10)">
+      <rect width="210" height="32" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="105" y="20" class="pill-text" fill="#1e293b" text-anchor="middle">🌐 3rd-Party Partner APIs</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrow from Client to Tier 1 -->
+  <line x1="800" y1="147" x2="800" y2="168" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+  <text x="815" y="162" class="box-desc" fill="#2563eb" font-weight="700">HTTPS / TLS 1.3</text>
+
+  <!-- ================= TIER 1: GLOBAL EDGE GATEWAY ================= -->
+  <g transform="translate(60, 172)">
+    <rect width="1480" height="64" rx="10" fill="#0f172a" filter="url(#shadow)" />
+    <text x="25" y="38" class="tier-label" fill="#38bdf8">TIER 1: GLOBAL EDGE GATEWAY</text>
+    <text x="240" y="38" class="pill-text" fill="#94a3b8">Spring Cloud Gateway (Netty Reactor) • Edge Security • OAuth2/JWT Validation • Global Rate Limiting • DDoS Shield • Geo-Routing</text>
+    <rect x="1310" y="18" width="145" height="28" rx="6" fill="#1e293b" stroke="#334155" />
+    <text x="1382" y="36" class="pill-text" fill="#38bdf8" text-anchor="middle">PORT :8080</text>
+  </g>
+
+  <!-- Bus Lines from Tier 1 to Tier 2 Gateways -->
+  <path d="M 800 236 L 800 256 M 200 256 L 1400 256 M 200 256 L 200 270 M 500 256 L 500 270 M 800 256 L 800 270 M 1100 256 L 1100 270 M 1400 256 L 1400 270" stroke="#6366f1" stroke-width="2" fill="none" marker-end="url(#arrow-purple)" />
+  <rect x="730" y="246" width="140" height="18" rx="4" fill="#e0e7ff" />
+  <text x="800" y="259" class="badge-text" fill="#4338ca" text-anchor="middle">HTTP/2 mTLS BACKBONE</text>
+
+  <!-- ================= TIER 2: 5 DOMAIN GATEWAYS ================= -->
+  <!-- Gateway 1: Mobility -->
+  <g transform="translate(60, 275)">
+    <rect width="280" height="60" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#card-shadow)" />
+    <text x="14" y="24" class="box-title" fill="#ffffff">🚗 Mobility Domain GW</text>
+    <text x="14" y="42" class="box-desc" fill="#c7d2fe">Port :8081 • Reactive Scatter-Gather</text>
+    <rect x="210" y="10" width="56" height="18" rx="4" fill="#312e81" />
+    <text x="238" y="22" class="badge-text" fill="#a5b4fc" text-anchor="middle">TIER 2</text>
+  </g>
+
+  <!-- Gateway 2: Trip -->
+  <g transform="translate(360, 275)">
+    <rect width="280" height="60" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#card-shadow)" />
+    <text x="14" y="24" class="box-title" fill="#ffffff">📍 Trip Lifecycle GW</text>
+    <text x="14" y="42" class="box-desc" fill="#c7d2fe">Port :8082 • Trip State Coordinator</text>
+    <rect x="210" y="10" width="56" height="18" rx="4" fill="#312e81" />
+    <text x="238" y="22" class="badge-text" fill="#a5b4fc" text-anchor="middle">TIER 2</text>
+  </g>
+
+  <!-- Gateway 3: Billing -->
+  <g transform="translate(660, 275)">
+    <rect width="280" height="60" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#card-shadow)" />
+    <text x="14" y="24" class="box-title" fill="#ffffff">💳 Billing &amp; Risk GW</text>
+    <text x="14" y="42" class="box-desc" fill="#c7d2fe">Port :8083 • Payments &amp; Quotes</text>
+    <rect x="210" y="10" width="56" height="18" rx="4" fill="#312e81" />
+    <text x="238" y="22" class="badge-text" fill="#a5b4fc" text-anchor="middle">TIER 2</text>
+  </g>
+
+  <!-- Gateway 4: Delivery -->
+  <g transform="translate(960, 275)">
+    <rect width="280" height="60" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#card-shadow)" />
+    <text x="14" y="24" class="box-title" fill="#ffffff">🍔 Delivery Domain GW</text>
+    <text x="14" y="42" class="box-desc" fill="#c7d2fe">Port :8084 • Eats Market Aggregator</text>
+    <rect x="210" y="10" width="56" height="18" rx="4" fill="#312e81" />
+    <text x="238" y="22" class="badge-text" fill="#a5b4fc" text-anchor="middle">TIER 2</text>
+  </g>
+
+  <!-- Gateway 5: Identity -->
+  <g transform="translate(1260, 275)">
+    <rect width="280" height="60" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" filter="url(#card-shadow)" />
+    <text x="14" y="24" class="box-title" fill="#ffffff">👤 Identity Domain GW</text>
+    <text x="14" y="42" class="box-desc" fill="#c7d2fe">Port :8085 • Auth &amp; Profiles</text>
+    <rect x="210" y="10" width="56" height="18" rx="4" fill="#312e81" />
+    <text x="238" y="22" class="badge-text" fill="#a5b4fc" text-anchor="middle">TIER 2</text>
+  </g>
+
+  <!-- Inter-Gateway Contract Link (The Agnostic Cross-Domain rule) -->
+  <path d="M 500 335 L 500 350 L 800 350 L 800 335" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4 3" fill="none" />
+  <rect x="585" y="342" width="130" height="16" rx="4" fill="#fdf2f8" stroke="#fbcfe8" />
+  <text x="650" y="354" class="badge-text" fill="#be185d" text-anchor="middle">Cross-Domain Contract</text>
+
+  <!-- ================= DOMAINS & 40 MICROSERVICES ================= -->
+
+  <!-- DOMAIN 1: MOBILITY & DISPATCH (Services 01 - 08) -->
+  <g transform="translate(60, 375)">
+    <rect width="280" height="495" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="2" filter="url(#card-shadow)" />
+    <rect width="280" height="34" rx="8" fill="#eff6ff" />
+    <text x="12" y="22" class="box-title" fill="#1e40af">DOMAIN 1: MOBILITY &amp; DISPATCH</text>
+    <text x="235" y="22" class="badge-text" fill="#3b82f6">[8 SVCS]</text>
+
+    <!-- 8 Services -->
+    <g transform="translate(10, 42)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">01. supply-service</text>
+      <text x="10" y="34" class="box-desc">Driver duty state &amp; geo-location [gRPC :9001]</text>
+    </g>
+    <g transform="translate(10, 96)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">02. demand-service</text>
+      <text x="10" y="34" class="box-desc">Rider request intake &amp; hot-zones [gRPC :9002]</text>
+    </g>
+    <g transform="translate(10, 150)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">03. dispatch-coordinator</text>
+      <text x="10" y="34" class="box-desc">DISCO algorithmic matching [gRPC :9003]</text>
+    </g>
+    <g transform="translate(10, 204)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">04. dynamic-pricing</text>
+      <text x="10" y="34" class="box-desc">Surge multiplier calculation [gRPC :9004]</text>
+    </g>
+    <g transform="translate(10, 258)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">05. routing-engine</text>
+      <text x="10" y="34" class="box-desc">Gurafu shortest-path routing [gRPC :9005]</text>
+    </g>
+    <g transform="translate(10, 312)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">06. eta-calculation</text>
+      <text x="10" y="34" class="box-desc">ML live travel-time forecast [gRPC :9006]</text>
+    </g>
+    <g transform="translate(10, 366)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">07. geospatial-h3</text>
+      <text x="10" y="34" class="box-desc">Hexagonal spatial indexing [gRPC :9007]</text>
+    </g>
+    <g transform="translate(10, 420)">
+      <rect width="260" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="18" class="box-title" fill="#0f172a">08. fleet-asset</text>
+      <text x="10" y="34" class="box-desc">Vehicle fleet partner registry [gRPC :9008]</text>
+    </g>
+  </g>
+
+  <!-- DOMAIN 2: TRIP FULFILLMENT (Services 09 - 15) -->
+  <g transform="translate(360, 375)">
+    <rect width="280" height="495" rx="10" fill="#ffffff" stroke="#c4b5fd" stroke-width="2" filter="url(#card-shadow)" />
+    <rect width="280" height="34" rx="8" fill="#f5f3ff" />
+    <text x="12" y="22" class="box-title" fill="#6d28d9">DOMAIN 2: TRIP FULFILLMENT</text>
+    <text x="235" y="22" class="badge-text" fill="#8b5cf6">[7 SVCS]</text>
+
+    <!-- 7 Services -->
+    <g transform="translate(10, 42)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">09. trip-state-machine</text>
+      <text x="10" y="38" class="box-desc">Trip lifecycle state engine [gRPC :9009]</text>
+    </g>
+    <g transform="translate(10, 102)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">10. uber-pool-routing</text>
+      <text x="10" y="38" class="box-desc">Carpool detour optimization [gRPC :9010]</text>
+    </g>
+    <g transform="translate(10, 162)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">11. reservation-booking</text>
+      <text x="10" y="38" class="box-desc">Scheduled rides &amp; dispatch [gRPC :9011]</text>
+    </g>
+    <g transform="translate(10, 222)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">12. safety-telematics</text>
+      <text x="10" y="38" class="box-desc">Crash &amp; hard-braking alerts [gRPC :9012]</text>
+    </g>
+    <g transform="translate(10, 282)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">13. lost-item</text>
+      <text x="10" y="38" class="box-desc">Vehicle item recovery workflows [gRPC :9013]</text>
+    </g>
+    <g transform="translate(10, 342)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">14. toll-calculation</text>
+      <text x="10" y="38" class="box-desc">Highway toll surcharge engine [gRPC :9014]</text>
+    </g>
+    <g transform="translate(10, 402)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">15. driver-compliance</text>
+      <text x="10" y="38" class="box-desc">Hours of service &amp; permits [gRPC :9015]</text>
+    </g>
+  </g>
+
+  <!-- DOMAIN 3: BILLING & RISK (Services 16 - 22) -->
+  <g transform="translate(660, 375)">
+    <rect width="280" height="495" rx="10" fill="#ffffff" stroke="#a7f3d0" stroke-width="2" filter="url(#card-shadow)" />
+    <rect width="280" height="34" rx="8" fill="#ecfdf5" />
+    <text x="12" y="22" class="box-title" fill="#047857">DOMAIN 3: BILLING &amp; RISK</text>
+    <text x="235" y="22" class="badge-text" fill="#10b981">[7 SVCS]</text>
+
+    <!-- 7 Services -->
+    <g transform="translate(10, 42)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">16. fare-quotation</text>
+      <text x="10" y="38" class="box-desc">Guaranteed upfront pricing quote [gRPC :9016]</text>
+    </g>
+    <g transform="translate(10, 102)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">17. payment-orchestrator</text>
+      <text x="10" y="38" class="box-desc">Multi-PSP gateway routing [gRPC :9017]</text>
+    </g>
+    <g transform="translate(10, 162)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">18. invoicing-ledger</text>
+      <text x="10" y="38" class="box-desc">Double-entry bookkeeping ledger [gRPC :9018]</text>
+    </g>
+    <g transform="translate(10, 222)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">19. driver-payout</text>
+      <text x="10" y="38" class="box-desc">Instant Pay &amp; bank ACH transfers [gRPC :9019]</text>
+    </g>
+    <g transform="translate(10, 282)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">20. fraud-risk-scoring</text>
+      <text x="10" y="38" class="box-desc">Real-time anti-fraud ML scorer [gRPC :9020]</text>
+    </g>
+    <g transform="translate(10, 342)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">21. promo-incentives</text>
+      <text x="10" y="38" class="box-desc">Coupons, quests &amp; discounts [gRPC :9021]</text>
+    </g>
+    <g transform="translate(10, 402)">
+      <rect width="260" height="52" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="20" class="box-title" fill="#0f172a">22. tax-compliance</text>
+      <text x="10" y="38" class="box-desc">VAT, GST &amp; municipal tax rules [gRPC :9022]</text>
+    </g>
+  </g>
+
+  <!-- DOMAIN 4: DELIVERY & EATS (Services 23 - 28) -->
+  <g transform="translate(960, 375)">
+    <rect width="280" height="495" rx="10" fill="#ffffff" stroke="#fed7aa" stroke-width="2" filter="url(#card-shadow)" />
+    <rect width="280" height="34" rx="8" fill="#fff7ed" />
+    <text x="12" y="22" class="box-title" fill="#c2410c">DOMAIN 4: DELIVERY &amp; EATS</text>
+    <text x="235" y="22" class="badge-text" fill="#f97316">[6 SVCS]</text>
+
+    <!-- 6 Services -->
+    <g transform="translate(10, 42)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">23. merchant-catalog</text>
+      <text x="10" y="42" class="box-desc">Store menus &amp; item availability [gRPC :9023]</text>
+    </g>
+    <g transform="translate(10, 112)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">24. order-management</text>
+      <text x="10" y="42" class="box-desc">Kitchen orders &amp; state lifecycle [gRPC :9024]</text>
+    </g>
+    <g transform="translate(10, 182)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">25. courier-dispatch</text>
+      <text x="10" y="42" class="box-desc">Courier matching &amp; route batching [gRPC :9025]</text>
+    </g>
+    <g transform="translate(10, 252)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">26. kitchen-prep-estimator</text>
+      <text x="10" y="42" class="box-desc">Food preparation time models [gRPC :9026]</text>
+    </g>
+    <g transform="translate(10, 322)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">27. eats-cart</text>
+      <text x="10" y="42" class="box-desc">Multi-merchant basket &amp; tips [gRPC :9027]</text>
+    </g>
+    <g transform="translate(10, 392)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">28. merchant-settlement</text>
+      <text x="10" y="42" class="box-desc">Restaurant commission &amp; payouts [gRPC :9028]</text>
+    </g>
+  </g>
+
+  <!-- DOMAIN 5: IDENTITY & ENGAGEMENT (Services 29 - 34) -->
+  <g transform="translate(1260, 375)">
+    <rect width="280" height="495" rx="10" fill="#ffffff" stroke="#fbcfe8" stroke-width="2" filter="url(#card-shadow)" />
+    <rect width="280" height="34" rx="8" fill="#fdf2f8" />
+    <text x="12" y="22" class="box-title" fill="#be185d">DOMAIN 5: IDENTITY &amp; USER</text>
+    <text x="235" y="22" class="badge-text" fill="#ec4899">[6 SVCS]</text>
+
+    <!-- 6 Services -->
+    <g transform="translate(10, 42)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">29. rider-profile</text>
+      <text x="10" y="42" class="box-desc">Rider saved spots &amp; preferences [gRPC :9029]</text>
+    </g>
+    <g transform="translate(10, 112)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">30. driver-profile</text>
+      <text x="10" y="42" class="box-desc">Driver background &amp; documents [gRPC :9030]</text>
+    </g>
+    <g transform="translate(10, 182)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">31. auth-session</text>
+      <text x="10" y="42" class="box-desc">SSO, biometric login &amp; tokens [gRPC :9031]</text>
+    </g>
+    <g transform="translate(10, 252)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">32. ratings-feedback</text>
+      <text x="10" y="42" class="box-desc">5-star rating &amp; sentiment tags [gRPC :9032]</text>
+    </g>
+    <g transform="translate(10, 322)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">33. loyalty-uber-one</text>
+      <text x="10" y="42" class="box-desc">Subscription tier perks &amp; points [gRPC :9033]</text>
+    </g>
+    <g transform="translate(10, 392)">
+      <rect width="260" height="62" rx="6" fill="#f8fafc" stroke="#e2e8f0" />
+      <text x="10" y="22" class="box-title" fill="#0f172a">34. comms-dispatch</text>
+      <text x="10" y="42" class="box-desc">Omnichannel Push, SMS &amp; Email [gRPC :9034]</text>
+    </g>
+  </g>
+
+  <!-- ================= DOMAIN 6: PLATFORM INFRASTRUCTURE (Agnostic Layer) ================= -->
+  <g transform="translate(60, 885)">
+    <rect width="1480" height="110" rx="10" fill="#1e293b" filter="url(#shadow)" />
+    <text x="25" y="30" class="tier-label" fill="#f8fafc">DOMAIN 6: PLATFORM INFRASTRUCTURE (LAYER 1 AGNOSTIC FOUNDATION)</text>
+    <text x="640" y="30" class="badge-text" fill="#94a3b8">DOWNWARD DEPENDENCY ONLY • AGNOSTIC TO ALL PRODUCT WORKFLOWS</text>
+
+    <!-- 6 Infra Services -->
+    <g transform="translate(20, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">35. telemetry-ingest</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Raw GPS telemetry pipeline</text>
+    </g>
+    <g transform="translate(262, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">36. event-stream-hub</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Kafka / Pulsar CDC Event Bus</text>
+    </g>
+    <g transform="translate(504, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">37. experimentation-flipr</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Feature flags &amp; A/B XP engine</text>
+    </g>
+    <g transform="translate(746, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">38. audit-compliance</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Immutable audit &amp; GDPR logs</text>
+    </g>
+    <g transform="translate(988, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">39. service-directory</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Dynamic gRPC health registry</text>
+    </g>
+    <g transform="translate(1230, 45)">
+      <rect width="230" height="50" rx="6" fill="#0f172a" stroke="#334155" />
+      <text x="10" y="20" class="box-title" fill="#38bdf8">40. rate-limiter-quota</text>
+      <text x="10" y="38" class="box-desc" fill="#94a3b8">Token-bucket quota governor</text>
+    </g>
+  </g>
+
+  <!-- ================= PERSISTENCE LAYER: DATABASE-PER-SERVICE ================= -->
+  <g transform="translate(60, 1010)">
+    <rect width="1480" height="65" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="25" y="38" class="tier-label" fill="#475569">PERSISTENCE</text>
+    <g transform="translate(160, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ supply_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(345, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ trip_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(530, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ payment_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(715, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ ledger_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(900, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ catalog_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(1085, 15)">
+      <rect width="170" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+      <text x="85" y="22" class="box-desc" fill="#1e293b" font-weight="700" text-anchor="middle">🗄️ auth_db (PostgreSQL)</text>
+    </g>
+    <g transform="translate(1270, 15)">
+      <rect width="190" height="34" rx="6" fill="#e2e8f0" stroke="#94a3b8" />
+      <text x="95" y="22" class="box-desc" fill="#0f172a" font-weight="700" text-anchor="middle">+ 34 Isolated Schema DBs</text>
+    </g>
+  </g>
+
+  <!-- Footer Tag -->
+  <g transform="translate(60, 1090)">
+    <text class="box-desc" fill="#64748b">Strict Isolation Policy: No cross-service database queries • All state extraction via typed gRPC stubs • Zero circular dependencies</text>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 420" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 800; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #64748b; }
+      .bar-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+      .time-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 800; }
+      .desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="1100" height="420" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text class="title">BEATING THE "NETWORK TAX": LATENCY COMPARISON</text>
+    <text y="20" class="subtitle">Sequential HTTP/1.1 REST Mesh vs. DOMA Tier-2 Reactive gRPC Scatter-Gather (p95 Real World)</text>
+  </g>
+
+  <!-- Pattern A: Sequential REST -->
+  <g transform="translate(40, 90)">
+    <rect width="1020" height="130" rx="8" fill="#fff1f2" stroke="#fecdd3" />
+    <text x="20" y="28" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#be123c">❌ TRADITIONAL FLAT MESH: SEQUENTIAL REST / JSON CALL CHAIN</text>
+    <text x="880" y="28" class="time-label" fill="#e11d48">Total: ~142 ms</text>
+
+    <!-- Timeline Bars -->
+    <g transform="translate(20, 50)">
+      <!-- Step 1 -->
+      <rect x="0" y="0" width="180" height="34" rx="5" fill="#f43f5e" />
+      <text x="90" y="21" class="bar-text" text-anchor="middle">Find Driver (45ms)</text>
+
+      <!-- Step 2 -->
+      <rect x="185" y="0" width="140" height="34" rx="5" fill="#e11d48" />
+      <text x="255" y="21" class="bar-text" text-anchor="middle">Surge (32ms)</text>
+
+      <!-- Step 3 -->
+      <rect x="330" y="0" width="160" height="34" rx="5" fill="#be123c" />
+      <text x="410" y="21" class="bar-text" text-anchor="middle">ETA Calc (38ms)</text>
+
+      <!-- Step 4 -->
+      <rect x="495" y="0" width="130" height="34" rx="5" fill="#9f1239" />
+      <text x="560" y="21" class="bar-text" text-anchor="middle">Route (27ms)</text>
+
+      <text x="640" y="22" class="desc" fill="#9f1239">⚠️ Latencies accumulate additively: Sum(T1 + T2 + T3 + T4) + JSON overhead</text>
+    </g>
+    <text x="20" y="112" class="desc" fill="#881337">Each call creates separate TCP connection / TLS negotiation and repeatedly parses large human-readable JSON payloads.</text>
+  </g>
+
+  <!-- Pattern B: DOMA Reactive Scatter-Gather gRPC -->
+  <g transform="translate(40, 240)">
+    <rect width="1020" height="145" rx="8" fill="#f0fdf4" stroke="#bbf7d0" />
+    <text x="20" y="28" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#15803d">✅ DOMA TIER-2 GATEWAY: NON-BLOCKING REACTIVE SCATTER-GATHER (gRPC HTTP/2)</text>
+    <text x="890" y="28" class="time-label" fill="#16a34a">Total: ~34 ms</text>
+
+    <!-- Timeline Bars in Parallel -->
+    <g transform="translate(20, 45)">
+      <!-- Parallel 1 -->
+      <rect x="0" y="0" width="140" height="18" rx="4" fill="#10b981" />
+      <text x="70" y="13" font-family="-apple-system, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">Find Driver (gRPC 28ms)</text>
+
+      <!-- Parallel 2 -->
+      <rect x="0" y="22" width="90" height="18" rx="4" fill="#059669" />
+      <text x="45" y="35" font-family="-apple-system, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">Surge (18ms)</text>
+
+      <!-- Parallel 3 -->
+      <rect x="0" y="44" width="170" height="18" rx="4" fill="#047857" />
+      <text x="85" y="57" font-family="-apple-system, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">ETA Calc (gRPC 34ms - Max Bound)</text>
+
+      <!-- Parallel 4 -->
+      <rect x="0" y="66" width="110" height="18" rx="4" fill="#065f46" />
+      <text x="55" y="79" font-family="-apple-system, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">Route (gRPC 22ms)</text>
+
+      <!-- Max Bound Line -->
+      <line x1="170" y1="0" x2="170" y2="84" stroke="#059669" stroke-width="2" stroke-dasharray="3 3" />
+      <text x="185" y="48" class="desc" fill="#047857" font-weight="700">Bounded by Max(T_i) = 34ms! (4.1x Faster)</text>
+    </g>
+    <text x="20" y="132" class="desc" fill="#14532d">Single multiplexed HTTP/2 TCP connection • Compact Protobuf wire encoding (78% smaller) • Zero thread blocking via Project Reactor</text>
+  </g>
+</svg>
