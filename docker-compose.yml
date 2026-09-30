@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # Infrastructure Backbone
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: doma-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: doma-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: doma-redis
+    ports:
+      - "6379:6379"
+
+  postgres-mobility:
+    image: postgres:16-alpine
+    container_name: doma-postgres-mobility
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: supply_locator_service_db
+      POSTGRES_USER: uber
+      POSTGRES_PASSWORD: uber_password
+
+  postgres-trip:
+    image: postgres:16-alpine
+    container_name: doma-postgres-trip
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: trip_state_machine_service_db
+      POSTGRES_USER: uber
+      POSTGRES_PASSWORD: uber_password
+
+  postgres-billing:
+    image: postgres:16-alpine
+    container_name: doma-postgres-billing
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: payment_orchestrator_service_db
+      POSTGRES_USER: uber
+      POSTGRES_PASSWORD: uber_password
+
+  # Gateways
+  edge-gateway:
+    build:
+      context: .
+      dockerfile: edge-gateway/Dockerfile
+    container_name: doma-edge-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    profiles: ["all", "gateways"]
+
+  mobility-domain-gateway:
+    build:
+      context: .
+      dockerfile: domain-mobility/mobility-domain-gateway/Dockerfile
+    container_name: doma-mobility-gateway
+    ports:
+      - "8081:8081"
+    profiles: ["all", "mobility", "mobility-billing"]
+
+  trip-domain-gateway:
+    build:
+      context: .
+      dockerfile: domain-trip/trip-domain-gateway/Dockerfile
+    container_name: doma-trip-gateway
+    ports:
+      - "8082:8082"
+    profiles: ["all", "trip"]
+
+  billing-domain-gateway:
+    build:
+      context: .
+      dockerfile: domain-billing/billing-domain-gateway/Dockerfile
+    container_name: doma-billing-gateway
+    ports:
+      - "8083:8083"
+    profiles: ["all", "billing", "mobility-billing"]
