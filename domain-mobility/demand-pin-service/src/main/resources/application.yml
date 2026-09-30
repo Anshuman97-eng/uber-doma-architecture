@@ -1,0 +1,14 @@
+server:
+  port: 9102
+
+grpc:
+  server:
+    port: 9002
+
+spring:
+  application:
+    name: demand-pin-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demand_pin_service_db
+    username: uber
+    password: uber_password
