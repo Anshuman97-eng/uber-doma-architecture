@@ -1,0 +1,14 @@
+server:
+  port: 9111
+
+grpc:
+  server:
+    port: 9011
+
+spring:
+  application:
+    name: trip-cancellation-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trip_cancellation_service_db
+    username: uber
+    password: uber_password
