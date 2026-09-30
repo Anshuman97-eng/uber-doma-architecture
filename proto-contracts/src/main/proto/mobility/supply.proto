@@ -1,0 +1,38 @@
+syntax = "proto3";
+package uber.mobility;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.mobility";
+
+service SupplyLocatorService {
+  rpc GetNearbyDrivers (NearbyDriversRequest) returns (NearbyDriversResponse);
+  rpc UpdateDriverLocation (DriverLocationUpdate) returns (LocationAck);
+}
+
+message NearbyDriversRequest {
+  string h3_index = 1;
+  double radius_meters = 2;
+  int32 max_candidates = 3;
+}
+
+message NearbyDriversResponse {
+  repeated DriverCandidate candidates = 1;
+}
+
+message DriverCandidate {
+  string driver_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  string vehicle_class = 4;
+  double bearing = 5;
+}
+
+message DriverLocationUpdate {
+  string driver_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  int64 timestamp_ms = 4;
+}
+
+message LocationAck {
+  bool success = 1;
+}

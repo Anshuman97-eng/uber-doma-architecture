@@ -1,0 +1,23 @@
+syntax = "proto3";
+package uber.mobility;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.mobility";
+
+service DispatchCoordinatorService {
+  rpc FindMatch (MatchRequest) returns (MatchResponse);
+}
+
+message MatchRequest {
+  string trip_id = 1;
+  string rider_id = 2;
+  string pickup_h3 = 3;
+  string dropoff_h3 = 4;
+  string service_tier = 5;
+}
+
+message MatchResponse {
+  string match_id = 1;
+  string driver_id = 2;
+  int32 eta_minutes = 3;
+  double surge_multiplier = 4;
+}
