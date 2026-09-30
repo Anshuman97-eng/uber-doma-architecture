@@ -1,0 +1,41 @@
+syntax = "proto3";
+package uber.trip;
+option java_multiple_files = true;
+option java_package = "com.uber.doma.proto.trip";
+
+service TripStateMachineService {
+  rpc CreateTrip (CreateTripRequest) returns (TripStateResponse);
+  rpc TransitionTripState (StateTransitionRequest) returns (TripStateResponse);
+  rpc GetTripDetails (TripDetailsRequest) returns (TripDetailsResponse);
+}
+
+message CreateTripRequest {
+  string rider_id = 1;
+  string pickup_address = 2;
+  string dropoff_address = 3;
+  double estimated_fare = 4;
+}
+
+message StateTransitionRequest {
+  string trip_id = 1;
+  string target_state = 2;
+  string reason = 3;
+}
+
+message TripStateResponse {
+  string trip_id = 1;
+  string current_state = 2;
+  int64 updated_at = 3;
+}
+
+message TripDetailsRequest {
+  string trip_id = 1;
+}
+
+message TripDetailsResponse {
+  string trip_id = 1;
+  string rider_id = 2;
+  string driver_id = 3;
+  string state = 4;
+  double fare = 5;
+}
