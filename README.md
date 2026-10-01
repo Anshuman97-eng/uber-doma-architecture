@@ -12,6 +12,47 @@
 
 ---
 
+## 💡 Why DOMA? Architecture Evolution: Flat Mesh vs. DOMA
+
+<p align="center">
+  <img src="docs/images/flat-mesh-vs-doma.svg" alt="Architecture Evolution: Flat Mesh vs. DOMA" width="100%">
+</p>
+
+### The Evolution: From Monolith to Microservices to DOMA
+
+As Uber scaled from a city-by-city ride-hailing app into a planetary mobility platform handling tens of millions of concurrent trips, its software architecture underwent three massive evolutionary phases:
+
+1. **The Monolith Era (2010–2014):** A single monolithic Python/Ruby codebase (`dispatch-monolith`). While simple initially, it caused massive deployment lock contention, tight relational database coupling, and single-point-of-failure outages.
+2. **The Microservice Boom (2014–2018):** Uber decomposed the monolith into thousands of microservices across hundreds of engineering teams. However, without strict domain boundaries, it created an unconstrained **Traditional Flat Mesh**—a chaotic "death star" architecture where any service could call any other service.
+3. **The DOMA Era (2018–Present):** To tame the crisis of microservice sprawl, Uber invented **Domain-Oriented Microservice Architecture (DOMA)**. DOMA introduces structured bounded domains, two-tier gateway encapsulation, and agnostic downward dependency rules to restore order, predictability, and high engineering velocity.
+
+---
+
+### The 5 Critical Failures of a Traditional Flat Mesh
+
+| Failure Mode | Traditional Flat Mesh Problem | How DOMA Solves It |
+| :--- | :--- | :--- |
+| **$O(N^2)$ Complexity Explosion** | In a flat mesh of $N$ services, potential connections scale to $N(N-1)$. 40 services yield over **1,500 point-to-point connections**, making system visualization and dependency tracing impossible. | Clusters 40 microservices into **6 Bounded Domains**. The Edge Gateway and external callers interact **only with Tier 2 Domain Gateways**, reducing global connection complexity from $O(N^2)$ to $O(D)$. |
+| **Unbounded Blast Radius** | A memory leak, deadlock, or slow query in a non-critical leaf service (e.g. `promo-rider-discount-service` or `lost-and-found-service`) cascades upstream and takes down the core trip booking flow. | **Encapsulation & Bulkheading:** Domain Gateways isolate internal leaf failures with Resilience4j circuit breakers, timeouts, and deterministic fallbacks. Core trip matching remains immune to auxiliary outages. |
+| **Spaghetti & Circular Dependencies** | Service A invokes Service B, which queries Service C, which asynchronously emits an event consumed by Service A. This leads to distributed deadlocks and unresolvable deployment order dependencies. | **Agnostic Downward Dependency Rules:** Invocations flow strictly downwards (Edge $\to$ Gateway $\to$ Domain Core $\to$ Infrastructure). Circular calls and upward invocations are strictly forbidden and verified at compile-time via ArchUnit. |
+| **Cognitive Overload & On-Call Chaos** | On-call engineers paged at 2 AM for a p99 latency spike must trace execution paths across 30 disjointed services owned by 12 different teams with fragmented ownership. | **Clear Domain Ownership (Conway's Law):** Each domain has a dedicated platform team managing its Domain Gateway, Protobuf contracts, and SLA guarantees. Teams deploy internal leaf services autonomously. |
+| **Database Coupling & Shared State** | Microservices query each other's databases directly or bypass domain logic via shared tables, leaking internal schema details and preventing database optimizations. | **Strict Persistence Isolation:** Zero cross-service or cross-domain database queries. Every microservice owns its private PostgreSQL schema, accessed exclusively via gRPC IPC or Kafka event streams. |
+
+---
+
+### The 4 Core Pillars of DOMA
+
+1. **Domains as Bounded Contexts:**  
+   Related microservices are grouped into collections representing logical business boundaries (e.g., **Mobility**, **Trip Lifecycle**, **Billing & Fares**, **Driver Asset**, **Rider Identity**, **Core Platform**).
+2. **Layered Two-Tier Gateway Encapsulation:**  
+   The **Tier 1 Edge Gateway** handles perimeter concerns (TLS, OAuth2, WAF, global rate limits). The **Tier 2 Domain Gateways** act as the sole entry point for each domain, transcoding external HTTP/REST requests into optimized binary gRPC stubs. Internal leaf microservices and databases are private and completely inaccessible from outside the domain.
+3. **Extension Architecture:**  
+   Core domains provide extension points so auxiliary features (rider discounts, seasonal promos, airport surcharges) hook cleanly into core lifecycles without modifying critical dispatch code.
+4. **Compile-Time & Network-Level Boundary Enforcement:**  
+   Boundary rules are not mere suggestions—they are enforced at **compile-time** using ArchUnit tests and at **runtime** using Kubernetes Network Policies and Istio AuthorizationPolicies. Direct cross-domain leaf calls result in build failures.
+
+---
+
 ## 🗺️ Tiered Traffic Routing & Interservice Communication
 
 The core request routing model across the **Edge Gateway (Tier 1)**, **Domain Gateways (Tier 2)**, and internal **Ride-Sharing Microservices**, illustrating:

@@ -1,0 +1,376 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 820" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap');
+
+      .main-title { font-family: 'Inter', -apple-system, sans-serif; font-size: 26px; font-weight: 800; fill: #f0f6fc; letter-spacing: -0.5px; }
+      .main-sub { font-family: 'Inter', -apple-system, sans-serif; font-size: 14px; font-weight: 400; fill: #8b949e; }
+      
+      .col-title { font-family: 'Inter', -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #e6edf3; }
+      .col-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-style: italic; fill: #7d8590; }
+
+      .node-text { font-family: 'Inter', -apple-system, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; text-anchor: middle; dominant-baseline: central; }
+      .bus-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; fill: #93c5fd; text-anchor: middle; dominant-baseline: central; letter-spacing: 0.5px; }
+      .gw-pill-text { font-family: 'Inter', -apple-system, sans-serif; font-size: 12px; font-weight: 700; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+      .domain-header { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; font-style: italic; letter-spacing: 1px; fill: #94a3b8; text-anchor: middle; }
+
+      .footer-txt { font-family: 'Inter', -apple-system, sans-serif; font-size: 13px; fill: #8b949e; }
+      .footer-badge { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; fill: #38bdf8; }
+
+      /* Animations */
+      .pulse-red {
+        fill: #ef4444;
+        filter: drop-shadow(0 0 6px #ef4444);
+        animation: pulseFade 2s infinite ease-in-out;
+      }
+      .pulse-cyan {
+        fill: #38bdf8;
+        filter: drop-shadow(0 0 6px #38bdf8);
+      }
+      .pulse-green {
+        fill: #10b981;
+        filter: drop-shadow(0 0 6px #10b981);
+      }
+      .pulse-blue {
+        fill: #60a5fa;
+        filter: drop-shadow(0 0 6px #60a5fa);
+      }
+
+      @keyframes pulseFade {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.04); }
+      }
+
+      /* Hover Interactivity for DOMA boxes */
+      .doma-box {
+        transition: all 0.3s ease;
+      }
+      .doma-box:hover {
+        stroke: #38bdf8 !important;
+        stroke-width: 2px !important;
+        filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.25));
+      }
+    </style>
+
+    <!-- Filters -->
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#60a5fa" />
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1080" height="820" fill="#0d1117" rx="16" />
+
+  <!-- Outer Card Container -->
+  <rect x="25" y="25" width="1030" height="770" rx="16" fill="#12161f" stroke="#30363d" stroke-width="1.2" />
+
+  <!-- ================= HEADER BLOCK ================= -->
+  <g transform="translate(55, 68)">
+    <text class="main-title">Architecture Evolution: Flat Mesh vs. DOMA</text>
+    <text y="28" class="main-sub">Domain-Oriented Microservice Architecture isolates complexity behind bounded domain gateways.</text>
+  </g>
+
+  <!-- Inner Split Canvas -->
+  <rect x="50" y="115" width="980" height="610" rx="12" fill="#0a0d14" stroke="#21262d" stroke-width="1.2" />
+
+  <!-- Center Dividing Dashed Line -->
+  <line x1="510" y1="125" x2="510" y2="715" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4 4" />
+
+  <!-- ========================================================================= -->
+  <!-- LEFT COLUMN: TRADITIONAL FLAT MESH                                        -->
+  <!-- ========================================================================= -->
+  <g transform="translate(50, 115)">
+    <!-- Column Header -->
+    <text x="215" y="42" class="col-title" text-anchor="middle">Traditional Flat Mesh</text>
+    <text x="215" y="64" class="col-sub" text-anchor="middle">High Coupling &amp; N² Dependencies</text>
+
+    <!-- Mesh Spaghetti Connections (Criss-Cross Lines) -->
+    <!-- Edge to Tier 1 -->
+    <line x1="215" y1="135" x2="105" y2="195" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="135" x2="215" y2="195" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="135" x2="325" y2="195" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+
+    <!-- Interservice Spaghetti (Auth, Order, Payment) -->
+    <line x1="105" y1="215" x2="215" y2="215" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="215" x2="325" y2="215" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="105" y1="215" x2="325" y2="215" stroke="#334155" stroke-width="1" stroke-dasharray="2 2" />
+
+    <!-- Cross Layer Connections (Auth -> Rider, Catalog, Promo) -->
+    <line x1="105" y1="235" x2="105" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="105" y1="235" x2="215" y2="315" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.7" />
+    <line x1="105" y1="235" x2="325" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+
+    <!-- Order -> Rider, Catalog, Promo, Inventory, Fleet DB -->
+    <line x1="215" y1="235" x2="105" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="235" x2="215" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="235" x2="325" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="235" x2="215" y2="435" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+
+    <!-- Payment -> Catalog, Promo, User DB, Fleet DB -->
+    <line x1="325" y1="235" x2="215" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="325" y1="235" x2="325" y2="315" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="325" y1="235" x2="105" y2="435" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.7" />
+    <line x1="325" y1="235" x2="325" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+
+    <!-- Mid Layer Cross Connections (Rider, Catalog, Promo) -->
+    <line x1="105" y1="335" x2="215" y2="335" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="335" x2="325" y2="335" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+
+    <!-- Down to Database Layer -->
+    <line x1="105" y1="355" x2="105" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="105" y1="355" x2="215" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="355" x2="105" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="355" x2="215" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="215" y1="355" x2="325" y2="435" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.7" />
+    <line x1="325" y1="355" x2="215" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+    <line x1="325" y1="355" x2="325" y2="435" stroke="#475569" stroke-width="1.2" stroke-dasharray="3 3" />
+
+    <!-- Chaos Pulses Traveling on Spaghetti Lines -->
+    <circle r="3.5" class="pulse-red">
+      <animateMotion path="M 215 135 L 325 195 L 105 315 L 215 435" dur="4.2s" repeatCount="indefinite" />
+    </circle>
+    <circle r="3" fill="#fb7185">
+      <animateMotion path="M 105 215 L 325 315 L 105 435" dur="3.5s" repeatCount="indefinite" />
+    </circle>
+    <circle r="3" fill="#f87171">
+      <animateMotion path="M 325 215 L 105 335 L 325 435" dur="4s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- NODES: Flat Mesh -->
+    <!-- Edge Gateway -->
+    <g transform="translate(150, 95)">
+      <rect width="130" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="65" y="20" class="node-text">Edge Gateway</text>
+    </g>
+
+    <!-- Row 1: Auth, Order, Payment -->
+    <g transform="translate(70, 195)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Auth</text>
+    </g>
+    <g transform="translate(180, 195)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Order</text>
+    </g>
+    <g transform="translate(285, 195)">
+      <rect width="80" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="40" y="20" class="node-text">Payment</text>
+    </g>
+
+    <!-- Row 2: Rider, Catalog, Promo -->
+    <g transform="translate(70, 315)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Rider</text>
+    </g>
+    <g transform="translate(180, 315)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Catalog</text>
+    </g>
+    <g transform="translate(290, 315)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Promo</text>
+    </g>
+
+    <!-- Row 3: User DB, Inventory, Fleet DB -->
+    <g transform="translate(70, 435)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">User DB</text>
+    </g>
+    <g transform="translate(175, 435)">
+      <rect width="80" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="40" y="20" class="node-text">Inventory</text>
+    </g>
+    <g transform="translate(290, 435)">
+      <rect width="70" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="35" y="20" class="node-text">Fleet DB</text>
+    </g>
+
+    <!-- Unbounded Blast Radius Pill Banner -->
+    <g transform="translate(110, 525)">
+      <rect width="210" height="36" rx="18" fill="#450a0a" stroke="#b91c1c" stroke-width="1.2" />
+      <text x="105" y="18" font-family="'JetBrains Mono', monospace" font-size="13px" font-weight="700" fill="#fca5a5" text-anchor="middle" dominant-baseline="central">Unbounded Blast Radius</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RIGHT COLUMN: DOMA STRUCTURED ARCHITECTURE                                -->
+  <!-- ========================================================================= -->
+  <g transform="translate(510, 115)">
+    <!-- Column Header -->
+    <text x="250" y="42" class="col-title" text-anchor="middle">DOMA Structured Architecture</text>
+    <text x="250" y="64" class="col-sub" text-anchor="middle">Encapsulated Bounded Contexts</text>
+
+    <!-- Connection: Edge Gateway -> Integration Layer -->
+    <line x1="250" y1="135" x2="250" y2="175" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#arrow-blue)" />
+
+    <!-- Connection: Integration Layer -> 3 Domains -->
+    <!-- To Identity -->
+    <path d="M 180 220 L 95 285" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#arrow-blue)" />
+    <!-- To Commerce -->
+    <path d="M 250 220 L 250 285" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#arrow-blue)" />
+    <!-- To Logistics -->
+    <path d="M 320 220 L 405 285" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#arrow-blue)" />
+
+    <!-- Moving Stream Pulses (Clean Top-Down Flow) -->
+    <circle r="4" class="pulse-cyan">
+      <animateMotion path="M 250 135 L 250 175" dur="1.2s" repeatCount="indefinite" />
+    </circle>
+    <circle r="3.5" class="pulse-green">
+      <animateMotion path="M 180 220 L 95 285" dur="1.4s" repeatCount="indefinite" />
+    </circle>
+    <circle r="3.5" class="pulse-blue">
+      <animateMotion path="M 250 220 L 250 285" dur="1.4s" repeatCount="indefinite" />
+    </circle>
+    <circle r="3.5" class="pulse-green">
+      <animateMotion path="M 320 220 L 405 285" dur="1.4s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Edge Gateway -->
+    <g transform="translate(185, 95)">
+      <rect width="130" height="40" rx="20" fill="#161b22" stroke="#6e7681" stroke-width="1.5" />
+      <text x="65" y="20" class="node-text">Edge Gateway</text>
+    </g>
+
+    <!-- Integration Layer / Bus Pill -->
+    <g transform="translate(130, 175)">
+      <rect width="240" height="42" rx="21" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8" filter="url(#glow-blue)" opacity="0.9" />
+      <rect width="240" height="42" rx="21" fill="#1e3a8a" stroke="#38bdf8" stroke-width="1.5" />
+      <text x="120" y="21" class="bus-text">Integration Layer / Bus</text>
+    </g>
+
+    <!-- ================= THREE DOMA BOUNDED BOXES ================= -->
+
+    <!-- 1. IDENTITY DOMAIN -->
+    <g class="doma-box" transform="translate(25, 290)">
+      <rect width="140" height="280" rx="14" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" />
+      <text x="70" y="26" class="domain-header">IDENTITY</text>
+
+      <!-- Domain Gateway Pill -->
+      <g transform="translate(15, 42)">
+        <rect width="110" height="34" rx="17" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5" />
+        <text x="55" y="17" class="gw-pill-text">Domain GW</text>
+      </g>
+
+      <!-- Intra-domain connector lines -->
+      <line x1="70" y1="76" x2="70" y2="105" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="145" x2="70" y2="165" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="205" x2="70" y2="225" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+
+      <!-- Auth Svc -->
+      <g transform="translate(20, 105)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Auth Svc</text>
+      </g>
+
+      <!-- Profile Svc -->
+      <g transform="translate(20, 165)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Profile Svc</text>
+      </g>
+
+      <!-- User DB -->
+      <g transform="translate(20, 225)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">User DB</text>
+      </g>
+    </g>
+
+    <!-- 2. COMMERCE DOMAIN -->
+    <g class="doma-box" transform="translate(180, 290)">
+      <rect width="140" height="280" rx="14" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" />
+      <text x="70" y="26" class="domain-header">COMMERCE</text>
+
+      <!-- Domain Gateway Pill -->
+      <g transform="translate(15, 42)">
+        <rect width="110" height="34" rx="17" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5" />
+        <text x="55" y="17" class="gw-pill-text">Domain GW</text>
+      </g>
+
+      <!-- Intra-domain connector lines -->
+      <line x1="70" y1="76" x2="70" y2="105" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="145" x2="70" y2="165" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="205" x2="70" y2="225" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+
+      <!-- Order Svc -->
+      <g transform="translate(20, 105)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Order Svc</text>
+      </g>
+
+      <!-- Payment -->
+      <g transform="translate(20, 165)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Payment</text>
+      </g>
+
+      <!-- Catalog -->
+      <g transform="translate(20, 225)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Catalog</text>
+      </g>
+    </g>
+
+    <!-- 3. LOGISTICS DOMAIN -->
+    <g class="doma-box" transform="translate(335, 290)">
+      <rect width="140" height="280" rx="14" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" />
+      <text x="70" y="26" class="domain-header">LOGISTICS</text>
+
+      <!-- Domain Gateway Pill -->
+      <g transform="translate(15, 42)">
+        <rect width="110" height="34" rx="17" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5" />
+        <text x="55" y="17" class="gw-pill-text">Domain GW</text>
+      </g>
+
+      <!-- Intra-domain connector lines -->
+      <line x1="70" y1="76" x2="70" y2="105" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="145" x2="70" y2="165" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="70" y1="205" x2="70" y2="225" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2" />
+
+      <!-- Rider Svc -->
+      <g transform="translate(20, 105)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Rider Svc</text>
+      </g>
+
+      <!-- Fleet Svc -->
+      <g transform="translate(20, 165)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Fleet Svc</text>
+      </g>
+
+      <!-- Fleet DB -->
+      <g transform="translate(20, 225)">
+        <rect width="100" height="40" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.2" />
+        <text x="50" y="20" class="node-text">Fleet DB</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= FOOTER / STATUS BAR ================= -->
+  <g transform="translate(50, 738)">
+    <rect width="980" height="44" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    
+    <text x="20" y="22" class="footer-txt" dominant-baseline="central">
+      Hover over a DOMA domain bounding box to highlight encapsulated microservices.
+    </text>
+
+    <!-- Right Side Status Badge -->
+    <g transform="translate(845, 12)">
+      <circle cx="0" cy="10" r="4.5" fill="#10b981" filter="drop-shadow(0 0 4px #10b981)" />
+      <text x="14" y="10" class="footer-badge" dominant-baseline="central">DOMA Isolation</text>
+    </g>
+  </g>
+</svg>
