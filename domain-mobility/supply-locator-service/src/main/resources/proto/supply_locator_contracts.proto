@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.uber.doma.domain_mobility.supply_locator;
+
+option java_multiple_files = true;
+option java_package = "com.uber.doma.domain_mobility.supply_locator.proto";
+
+// Ingestion payload for high-frequency driver telematics updates
+message DriverLocationPing {
+  // Unique UUID string of the driver partner
+  string driver_id = 1;
+
+  // WGS-84 latitude in degrees [-90.0, 90.0]
+  double latitude = 2;
+
+  // WGS-84 longitude in degrees [-180.0, 180.0]
+  double longitude = 3;
+
+  // Uber H3 Resolution-9 hexagonal index string
+  string h3_index = 4;
+
+  // Epoch timestamp in milliseconds
+  int64 timestamp_ms = 5;
+}
