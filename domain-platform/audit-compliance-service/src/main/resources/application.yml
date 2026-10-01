@@ -4,6 +4,9 @@ server:
 grpc:
   server:
     port: 9038
+    # Interceptors are auto-registered as Spring beans by TracingConfiguration.
+    interceptors:
+      - com.uber.doma.domain_platform.audit_compliance_service.tracing.GrpcServerTracingInterceptor
 
 spring:
   application:
@@ -12,3 +15,29 @@ spring:
     url: jdbc:postgresql://localhost:5432/audit_compliance_service_db
     username: uber
     password: uber_password
+
+# Micrometer Tracing + OpenTelemetry W3C context propagation configuration.
+# See https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.micrometer-tracing
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  observations:
+    annotations:
+      enabled: true
+
+# OpenTelemetry SDK configuration: the bridge-otel auto-config picks up the
+# OTEL_* style properties when present, and we explicitly disable any
+# external exporter that might not be reachable in the local test environment.
+otel:
+  sdk:
+    disabled: false
+  traces:
+    exporter: logging
+  metrics:
+    exporter: none
+  logs:
+    exporter: none
+  service:
+    name: audit-compliance-service
