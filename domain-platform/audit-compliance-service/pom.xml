@@ -9,12 +9,24 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>audit-compliance-service</artifactId>
-    <name>Uber DOMA - Immutable Audit Log & GDPR</name>
+    <name>Uber DOMA - Immutable Audit Log and GDPR</name>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-logging</artifactId>
         </dependency>
         <dependency>
             <groupId>net.devh</groupId>
@@ -44,6 +56,16 @@
             <groupId>com.uber.doma</groupId>
             <artifactId>common-redis</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-testing</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
